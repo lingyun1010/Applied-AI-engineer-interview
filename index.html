@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Nuix Principal AI Enablement Builder interview preparation — English scripts with Chinese coaching notes.">
+  <title>Nuix Interview Preparation · Principal AI Enablement Builder</title>
+  <style>
+    :root {
+      --ink: #15231f;
+      --muted: #5d6b65;
+      --paper: #f4f0e8;
+      --card: #fffdf8;
+      --accent: #ff5a36;
+      --accent-dark: #bf321b;
+      --mint: #bce8d5;
+      --mint-dark: #0f6551;
+      --line: rgba(21, 35, 31, .15);
+      --shadow: 0 18px 55px rgba(35, 49, 43, .11);
+      --radius: 22px;
+      --max: 1180px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 100px; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 10% 0%, rgba(188, 232, 213, .65), transparent 26rem),
+        linear-gradient(180deg, #fbf8f1 0%, var(--paper) 100%);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.65;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .skip-link { position: fixed; left: 1rem; top: -4rem; z-index: 99; padding: .7rem 1rem; background: var(--ink); color: white; border-radius: 10px; }
+    .skip-link:focus { top: 1rem; }
+    .topbar {
+      position: sticky; top: 0; z-index: 30;
+      border-bottom: 1px solid var(--line);
+      background: rgba(251, 248, 241, .9);
+      backdrop-filter: blur(16px);
+    }
+    .topbar-inner { max-width: var(--max); margin: auto; padding: .85rem 1.25rem; display: flex; align-items: center; gap: 1rem; }
+    .brand { display: flex; align-items: center; gap: .65rem; min-width: max-content; font-weight: 850; letter-spacing: -.02em; }
+    .brand-mark { width: 2rem; height: 2rem; display: grid; place-items: center; border-radius: 9px; background: var(--ink); color: var(--mint); }
+    .nav { flex: 1; display: flex; gap: .35rem; overflow-x: auto; scrollbar-width: none; }
+    .nav::-webkit-scrollbar { display: none; }
+    .nav a { white-space: nowrap; text-decoration: none; color: var(--muted); font-size: .86rem; font-weight: 700; padding: .5rem .72rem; border-radius: 999px; }
+    .nav a:hover, .nav a.active { color: var(--ink); background: white; box-shadow: 0 3px 14px rgba(21, 35, 31, .08); }
+    .actions { display: flex; gap: .45rem; }
+    .btn { border: 1px solid var(--line); background: var(--card); color: var(--ink); padding: .58rem .8rem; border-radius: 999px; cursor: pointer; font-weight: 750; }
+    .btn:hover { border-color: var(--ink); }
+    .btn-primary { background: var(--ink); color: white; border-color: var(--ink); }
+    .hero { max-width: var(--max); margin: 0 auto; padding: 5.4rem 1.25rem 3rem; display: grid; grid-template-columns: 1.35fr .65fr; gap: 2.2rem; align-items: end; }
+    .eyebrow { display: inline-flex; align-items: center; gap: .55rem; margin: 0 0 1.1rem; color: var(--accent-dark); font-weight: 850; text-transform: uppercase; letter-spacing: .11em; font-size: .77rem; }
+    .eyebrow::before { content: ""; width: 2.1rem; height: 3px; background: var(--accent); border-radius: 3px; }
+    h1, h2, h3 { line-height: 1.08; letter-spacing: -.04em; }
+    h1 { max-width: 820px; margin: 0; font-size: clamp(3rem, 7vw, 6.7rem); font-weight: 900; }
+    h1 span { color: var(--accent); }
+    .hero-lede { max-width: 720px; margin: 1.6rem 0 0; font-size: clamp(1.05rem, 2vw, 1.35rem); color: var(--muted); }
+    .interview-card { position: relative; overflow: hidden; background: var(--ink); color: white; padding: 1.5rem; border-radius: var(--radius); box-shadow: var(--shadow); }
+    .interview-card::after { content: "10"; position: absolute; right: -1rem; bottom: -3.8rem; font-size: 10rem; font-weight: 900; color: rgba(255,255,255,.06); }
+    .interview-card .label { color: var(--mint); font-size: .75rem; font-weight: 850; letter-spacing: .1em; text-transform: uppercase; }
+    .interview-card strong { display: block; font-size: 1.6rem; margin: .35rem 0; }
+    .interview-card p { margin: .25rem 0; color: rgba(255,255,255,.72); }
+    .interview-card .focus { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,.16); font-size: .9rem; }
+    main { max-width: var(--max); margin: auto; padding: 0 1.25rem 5rem; }
+    section { margin: 5rem 0; }
+    .section-head { display: grid; grid-template-columns: 110px 1fr; gap: 1rem; align-items: start; margin-bottom: 2rem; }
+    .section-no { color: var(--accent); font-size: .83rem; font-weight: 900; letter-spacing: .12em; }
+    h2 { margin: 0; font-size: clamp(2.2rem, 5vw, 4rem); }
+    .section-summary { max-width: 760px; margin: .8rem 0 0; color: var(--muted); font-size: 1.05rem; }
+    .grid { display: grid; gap: 1rem; }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .card { background: rgba(255,253,248,.88); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.5rem; box-shadow: 0 8px 28px rgba(35, 49, 43, .05); }
+    .card h3 { margin: 0 0 .75rem; font-size: 1.35rem; }
+    .card p:last-child, .card ul:last-child { margin-bottom: 0; }
+    .tag { display: inline-block; padding: .28rem .55rem; border-radius: 999px; background: var(--mint); color: var(--mint-dark); font-size: .72rem; font-weight: 850; letter-spacing: .04em; text-transform: uppercase; }
+    .signal { border-top: 4px solid var(--accent); }
+    .signal:nth-child(2) { border-color: var(--mint-dark); }
+    .signal:nth-child(3) { border-color: #8157c6; }
+    .signal:nth-child(4) { border-color: #e0a314; }
+    .role-map { margin-top: 1rem; }
+    .role-row { display: grid; grid-template-columns: .78fr 1.22fr; gap: 1rem; padding: 1.1rem 0; border-top: 1px solid var(--line); }
+    .role-row:first-child { border-top: 0; }
+    .role-row strong { font-size: .95rem; }
+    .role-row p { margin: 0; color: var(--muted); }
+    .script { position: relative; background: var(--ink); color: white; border-radius: var(--radius); padding: clamp(1.35rem, 3vw, 2rem); }
+    .script + .script { margin-top: 1rem; }
+    .script .time { color: var(--mint); font-weight: 850; font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; }
+    .script blockquote { margin: .75rem 0 0; font-size: clamp(1.02rem, 2vw, 1.18rem); line-height: 1.75; }
+    .copy { position: absolute; right: 1rem; top: 1rem; border: 1px solid rgba(255,255,255,.25); background: rgba(255,255,255,.08); color: white; border-radius: 999px; padding: .4rem .7rem; cursor: pointer; font-size: .76rem; font-weight: 750; }
+    .copy:hover { background: rgba(255,255,255,.16); }
+    .coach { margin-top: 1rem; border-left: 4px solid var(--accent); background: #fff4e9; border-radius: 0 16px 16px 0; padding: 1rem 1.15rem; }
+    .coach strong { display: block; color: var(--accent-dark); margin-bottom: .25rem; }
+    .coach p { margin: 0; color: #6d493e; }
+    .formula { display: flex; align-items: stretch; gap: .65rem; margin: 1.5rem 0; }
+    .formula > div { flex: 1; min-width: 0; display: grid; place-items: center; text-align: center; padding: 1rem .75rem; border-radius: 15px; background: var(--card); border: 1px solid var(--line); font-weight: 800; }
+    .formula .plus { flex: 0; border: 0; background: transparent; padding-inline: 0; color: var(--accent); font-size: 1.4rem; }
+    .project { display: flex; flex-direction: column; }
+    .project .project-no { color: var(--accent); font-size: 2.6rem; font-weight: 900; line-height: 1; }
+    .project dl { margin: 1rem 0; }
+    .project dt { margin-top: .8rem; color: var(--muted); font-size: .73rem; font-weight: 850; letter-spacing: .09em; text-transform: uppercase; }
+    .project dd { margin: .15rem 0 0; }
+    .project .use { margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--line); color: var(--mint-dark); font-weight: 750; }
+    .gap-card { background: #fffaf3; }
+    .gap-card .answer { margin-top: 1rem; padding: 1rem; background: white; border-radius: 14px; border: 1px solid var(--line); }
+    .bridge { display: grid; grid-template-columns: 1fr auto 1fr; gap: .7rem; align-items: center; }
+    .bridge-box { min-height: 180px; padding: 1.3rem; border-radius: var(--radius); background: var(--card); border: 1px solid var(--line); }
+    .bridge-arrow { color: var(--accent); font-size: 2rem; font-weight: 900; }
+    details { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 0 1.2rem; }
+    details + details { margin-top: .7rem; }
+    summary { cursor: pointer; list-style: none; padding: 1.05rem 2.2rem 1.05rem 0; font-weight: 850; position: relative; }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: "+"; position: absolute; right: 0; top: .85rem; font-size: 1.35rem; color: var(--accent); }
+    details[open] summary::after { content: "−"; }
+    .answer-body { padding: 0 0 1.2rem; color: var(--muted); }
+    .answer-body .say { color: var(--ink); padding-left: 1rem; border-left: 3px solid var(--mint-dark); }
+    .questions { counter-reset: q; }
+    .question { position: relative; padding-left: 4.4rem; }
+    .question::before { counter-increment: q; content: "Q" counter(q); position: absolute; left: 1.25rem; top: 1.3rem; color: var(--accent); font-weight: 900; }
+    .cheat-sheet { background: var(--ink); color: white; padding: clamp(1.5rem, 4vw, 3rem); border-radius: 28px; box-shadow: var(--shadow); }
+    .cheat-sheet h2 { color: white; }
+    .cheat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem 2rem; margin-top: 1.6rem; }
+    .cheat-item { border-top: 1px solid rgba(255,255,255,.18); padding-top: 1rem; }
+    .cheat-item h3 { color: var(--mint); margin: 0 0 .5rem; font-size: .85rem; text-transform: uppercase; letter-spacing: .09em; }
+    .cheat-item p, .cheat-item ul { margin: 0; color: rgba(255,255,255,.83); }
+    .cheat-item strong { color: white; }
+    .footer { max-width: var(--max); margin: 0 auto; padding: 2rem 1.25rem 4rem; color: var(--muted); border-top: 1px solid var(--line); font-size: .88rem; display: flex; justify-content: space-between; gap: 1rem; }
+    .print-only { display: none; }
+    @media (max-width: 880px) {
+      .hero { grid-template-columns: 1fr; padding-top: 3.6rem; }
+      .interview-card { max-width: 540px; }
+      .grid-3 { grid-template-columns: 1fr; }
+      .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .grid-2, .cheat-grid { grid-template-columns: 1fr; }
+      .section-head { grid-template-columns: 1fr; }
+      .actions .btn:not(.btn-primary) { display: none; }
+      .bridge { grid-template-columns: 1fr; }
+      .bridge-arrow { transform: rotate(90deg); justify-self: center; }
+    }
+    @media (max-width: 620px) {
+      .brand span:last-child { display: none; }
+      .topbar-inner { padding: .65rem .8rem; }
+      .nav a { padding: .45rem .6rem; }
+      .hero, main { padding-left: 1rem; padding-right: 1rem; }
+      h1 { font-size: clamp(2.75rem, 15vw, 4.5rem); }
+      section { margin: 4rem 0; }
+      .formula { flex-direction: column; }
+      .grid-4 { grid-template-columns: 1fr; }
+      .formula .plus { padding: 0; }
+      .role-row { grid-template-columns: 1fr; gap: .35rem; }
+      .footer { flex-direction: column; }
+    }
+    @media print {
+      @page { margin: 14mm; size: A4; }
+      :root { --paper: white; --card: white; }
+      body { background: white; font-size: 10pt; }
+      .topbar, .copy, .footer, .no-print { display: none !important; }
+      .hero { padding: 0 0 1rem; grid-template-columns: 1.3fr .7fr; }
+      h1 { font-size: 34pt; }
+      .hero-lede { font-size: 11pt; }
+      main { padding: 0; }
+      section { margin: 1.4rem 0; break-inside: auto; }
+      h2 { font-size: 22pt; }
+      h3 { font-size: 13pt; }
+      .section-head { grid-template-columns: 60px 1fr; margin-bottom: .8rem; }
+      .card, .script, details, .cheat-sheet, .interview-card { box-shadow: none; break-inside: avoid; }
+      .script, .cheat-sheet, .interview-card { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      details { padding-bottom: .6rem; }
+      details .answer-body { display: block; }
+      .print-only { display: block; }
+      body.cheat-print .hero, body.cheat-print main > section:not(#cheat), body.cheat-print .footer { display: none !important; }
+      body.cheat-print #cheat { margin: 0; }
+      body.cheat-print .cheat-sheet { min-height: 255mm; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#overview">Skip to preparation</a>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand"><span class="brand-mark">N</span><span>Nuix interview prep</span></div>
+      <nav class="nav" aria-label="Page sections">
+        <a href="#overview">Role</a><a href="#intro">Introduction</a><a href="#why">Why Nuix</a><a href="#company">Why a team</a><a href="#projects">Projects</a><a href="#gaps">Gaps</a><a href="#cloud">Cloud</a><a href="#screening">Answers</a><a href="#becky">Ask Becky</a><a href="#cheat">Cheat sheet</a>
+      </nav>
+      <div class="actions">
+        <button class="btn" type="button" onclick="printPage(false)">Print all</button>
+        <button class="btn btn-primary" type="button" onclick="printPage(true)">Print cheat sheet</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div>
+      <p class="eyebrow">Recruiter screen → in-person interview</p>
+      <h1>Build the case.<br><span>Tell the truth.</span></h1>
+      <p class="hero-lede">A practical interview guide for the <strong>Principal AI Enablement Builder</strong> role: clear English scripts, Chinese coaching notes, and evidence you can defend under follow-up questions.</p>
+    </div>
+    <aside class="interview-card" aria-label="Interview appointment">
+      <div class="label">In-person interview</div>
+      <strong>Tue 10 Nov · 3:00 pm</strong>
+      <p>Nuix Sydney office</p>
+      <p>Charlie · Head of AI Enablement</p>
+      <p>Likely: Tanya (Head of IT) or another interviewer</p>
+      <div class="focus"><strong style="font-size:1rem">What they will explore</strong>Background · stakeholders &amp; clients · consulting approach · building and deploying AI tools, workflows and agentic systems.</div>
+    </aside>
+  </div>
+
+  <main id="main">
+    <section id="overview">
+      <div class="section-head"><div class="section-no">01 / ROLE</div><div><h2>Read the role correctly</h2><p class="section-summary">This is a permanent internal builder role organised into three-to-six-month business rotations. The rotation changes; the employment does not.</p></div></div>
+      <div class="grid grid-2">
+        <article class="card">
+          <span class="tag">Nuix in one sentence</span>
+          <h3>“Finding truth in a digital world”</h3>
+          <p>Nuix builds software that helps organisations turn complex data into actionable intelligence. The role sits inside its new internal AI capability, intended to connect AI activity with measurable business impact.</p>
+          <div class="coach"><strong>中文提示</strong><p>不要把 Nuix 只说成“做 AI 的公司”。它的核心是复杂数据、调查/法律科技与可信结果；AI Builder 是内部转型能力。</p></div>
+        </article>
+        <article class="card">
+          <span class="tag">The operating model</span>
+          <h3>Embedded builder, not slideware consultant</h3>
+          <p>You embed in a function, discover the workflow, time-box a POC, decide build/pause/abandon, ship into the live environment, instrument it, learn, and leave reusable knowledge for the next rotation.</p>
+          <div class="coach"><strong>中文提示</strong><p>重点不是“会用 LLM”，而是能把模糊业务问题变成可上线、可评估、可运维的系统。</p></div>
+        </article>
+      </div>
+      <div class="grid role-map">
+        <div class="role-row"><strong>Discover</strong><p>Map current workflows, stakeholders, risk, value and clear exit criteria.</p></div>
+        <div class="role-row"><strong>Build</strong><p>RAG, document processing, agentic workflows, MCP/API integrations and reusable skill files.</p></div>
+        <div class="role-row"><strong>Operate</strong><p>Evaluation, observability, production debugging, latency/cost judgement and iteration.</p></div>
+        <div class="role-row"><strong>Multiply</strong><p>Communicate with leaders, support AI advocates, and document patterns for the wider cohort.</p></div>
+      </div>
+      <div class="grid grid-4" style="margin-top:1rem">
+        <div class="card signal"><h3>Ambiguity</h3><p>Can you impose structure without waiting for a perfect brief?</p></div>
+        <div class="card signal"><h3>Ownership</h3><p>Can you own discovery through monitoring—not hand off the hard parts?</p></div>
+        <div class="card signal"><h3>Judgement</h3><p>Can you stop an attractive POC when evidence says it will not pay back?</p></div>
+        <div class="card signal"><h3>Influence</h3><p>Can you be credible with both functional leaders and engineers?</p></div>
+      </div>
+    </section>
+
+    <section id="intro">
+      <div class="section-head"><div class="section-no">02 / INTRO</div><div><h2>Your opening</h2><p class="section-summary">Use the shorter version first. Expand only when the interviewer gives you room.</p></div></div>
+      <div class="script">
+        <button class="copy" type="button">Copy</button><div class="time">60-second version</div>
+        <blockquote>“I’m an experienced software and data engineer who has been moving deliberately into applied AI. I have a PhD in computer vision and more than seven years of engineering experience across Java, JavaScript, React, APIs, AWS, Docker, PostgreSQL and data platforms. More recently, I’ve been building GenAI systems that combine retrieval, structured knowledge, routing, tool use and human review—through EvidMatch, an e-commerce RAG support prototype and the Love At Home platform. What attracts me to this role is that it is not an advisory AI position. It starts with an ambiguous operational problem and expects one person to work with stakeholders, structure the use case, build the solution and stay accountable after launch. That combination of hands-on delivery, business process and enterprise impact is exactly where I want to take my next step.”</blockquote>
+      </div>
+      <div class="script">
+        <button class="copy" type="button">Copy</button><div class="time">90-second version</div>
+        <blockquote>“My background combines research depth with practical software delivery. I completed a PhD in computer vision at Queen Mary University of London, then spent more than seven years in software and big-data engineering, working across backend services, frontend products, APIs, AWS, Docker, PostgreSQL, Solr, testing and deployment. That gave me strong production habits: clarify the problem, design for failure, make trade-offs explicit and work closely with the people who use the system.<br><br>Over the last phase of my career, I’ve focused that engineering experience on applied GenAI. EvidMatch explores how structured project evidence can become trustworthy, reviewable outputs; my e-commerce RAG prototype combines structured product and policy knowledge with intent routing and escalation; and Love At Home is a real service-business platform where I have had to connect product decisions with operational workflows, reliability and privacy.<br><br>I’m honest that my enterprise AI production depth is still developing. I’m not presenting prototypes as years of large-scale production AI. What I do bring is mature engineering judgement, direct stakeholder experience and evidence that I can learn and build quickly. Nuix is compelling because the role turns those strengths into full-lifecycle AI delivery inside complex functions, with a team, governance and real organisational impact.”</blockquote>
+      </div>
+      <div class="coach"><strong>中文提示</strong><p>开场顺序：成熟工程师 → 应用 AI 转型 → 三个证据 → 为什么这个岗位。不要从“我缺少什么”开始；差距放在最后主动、简短、可控地说明。</p></div>
+    </section>
+
+    <section id="why">
+      <div class="section-head"><div class="section-no">03 / WHY NUIX</div><div><h2>Why Nuix?</h2><p class="section-summary">Tie company mission, operating model and your next career step together. Avoid generic praise.</p></div></div>
+      <div class="formula"><div>Complex, sensitive data</div><div class="plus">+</div><div>Embedded AI delivery</div><div class="plus">+</div><div>Visible business impact</div></div>
+      <div class="script">
+        <button class="copy" type="button">Copy</button><div class="time">Suggested answer · 75 seconds</div>
+        <blockquote>“Three things stand out to me. First, Nuix works in a domain where data is complex, sensitive and consequential. That makes good engineering, traceability and judgement essential rather than optional. Second, the Builder model is unusually concrete. I would not just recommend an AI use case; I would embed with a function, understand the workflow, prove or disprove value, build the system and own what happens after launch. Third, the rotation model creates a strong learning loop. Each use case should produce not only an outcome for one team, but also reusable patterns that make the next team faster. That is a meaningful way to build an internal AI capability. It also fits the way I work: hands-on, close to users, and accountable for turning ambiguity into working software.”</blockquote>
+      </div>
+      <div class="coach"><strong>中文提示</strong><p>可以呼应 Nuix 的 Take Ownership、Team Nuix、Hero Our Customers，但不要像背公司价值观。把价值观转换成行为：own lifecycle、shared patterns、measured outcomes。</p></div>
+    </section>
+
+    <section id="company">
+      <div class="section-head"><div class="section-no">04 / MOTIVATION</div><div><h2>Why an established company and team?</h2><p class="section-summary">Your strongest answer is not “my startup did not work”. It is “building independently clarified what scale of problems and collaboration I want next”.</p></div></div>
+      <div class="grid grid-3">
+        <article class="card"><span class="tag">Collaboration</span><h3>Sharper decisions</h3><p>Independent building strengthened ownership. Now you want peers who challenge architecture, share domain context and improve the quality of decisions.</p></article>
+        <article class="card"><span class="tag">Complexity</span><h3>Enterprise constraints</h3><p>You want to work with real internal systems, governance, sensitive data, multiple stakeholders and operational consequences that cannot be simulated in a solo project.</p></article>
+        <article class="card"><span class="tag">Impact</span><h3>Longer compounding loop</h3><p>You want to stay with solutions through adoption, monitoring and iteration, while reusable patterns compound across teams.</p></article>
+      </div>
+      <div class="script" style="margin-top:1rem">
+        <button class="copy" type="button">Copy</button><div class="time">Core answer · the version to practise hardest</div>
+        <blockquote>“Building my own products has been valuable because it forced me to own every decision—from understanding the user problem to architecture, delivery and feedback. It also clarified what I want next. I do not want to build only in isolation. The problems that interest me most now are the ones that require strong collaboration: deep domain knowledge, experienced technical peers, security and governance partners, and business leaders who own the outcome.<br><br>An established company gives me access to complex enterprise workflows and the responsibility to make AI work within real constraints, not around them. A team also creates a better quality bar: ideas are challenged, patterns are reused and lessons can compound across projects. What appeals to me about Nuix specifically is that I would keep the ownership and speed I developed as an independent builder, but apply them with a capable team to problems that have a longer horizon and broader organisational impact.”</blockquote>
+      </div>
+      <div class="coach"><strong>中文提示</strong><p>语气要是“主动选择更大的协作和复杂度”，不是“创业失败所以找稳定工作”。不要贬低自己的项目；它们证明 ownership，而 Nuix 是下一阶段的放大器。</p></div>
+    </section>
+
+    <section id="projects">
+      <div class="section-head"><div class="section-no">05 / EVIDENCE</div><div><h2>Three truthful project stories</h2><p class="section-summary">Each story needs a business problem, your decision, what you built, and the boundary between current proof and production maturity.</p></div></div>
+      <div class="grid grid-3">
+        <article class="card project"><div class="project-no">01</div><h3>EvidMatch</h3><span class="tag">Evidence-led AI product</span>
+          <dl><dt>Problem</dt><dd>People have useful project evidence, but it is fragmented and difficult to turn into trustworthy, context-specific proof.</dd><dt>Approach</dt><dd>Structure projects, milestones and evidence so AI-assisted outputs can remain grounded in source material and under explicit user control.</dd><dt>Your angle</dt><dd>Product architecture, APIs, data and permission boundaries, applied AI workflow design and a clear human-in-the-loop publication boundary.</dd><dt>Truth boundary</dt><dd>Describe the features you personally built and verified. Do not imply enterprise-wide adoption or production scale.</dd></dl>
+          <p class="use">Use for: ambiguous product definition, trust, tool integration, data boundaries and end-to-end ownership.</p>
+        </article>
+        <article class="card project"><div class="project-no">02</div><h3>E-commerce RAG prototype</h3><span class="tag">RAG · routing · escalation</span>
+          <dl><dt>Problem</dt><dd>Customer questions span products, policies and FAQs; not every request should be answered by retrieval alone.</dd><dt>Approach</dt><dd>Create structured knowledge, route intent, retrieve the relevant context, constrain the response and escalate when confidence or policy requires it.</dd><dt>Your angle</dt><dd>RAG design, structured knowledge generation, tool-like routing and human escalation thinking.</dd><dt>Truth boundary</dt><dd>Call it a prototype. Discuss the evaluation and observability you would require before real customer traffic.</dd></dl>
+          <p class="use">Use for: RAG, POC discipline, build/pause criteria, failure modes and responsible automation.</p>
+        </article>
+        <article class="card project"><div class="project-no">03</div><h3>Love At Home</h3><span class="tag">Operational full-stack delivery</span>
+          <dl><dt>Problem</dt><dd>A service business needs a trustworthy path from public enquiry to operational follow-up.</dd><dt>Approach</dt><dd>Build the website and enquiry workflow with validation, persistence, email/Sheets integrations, idempotency and deployment considerations.</dd><dt>Your angle</dt><dd>Translate non-technical needs into a working system, connect multiple services and diagnose failures across application and deployment boundaries.</dd><dt>Truth boundary</dt><dd>This is strongest as proof of engineering and stakeholder ownership—not as an agentic AI case study.</dd></dl>
+          <p class="use">Use for: client consulting, workflow mapping, reliability, privacy, integrations and production-minded delivery.</p>
+        </article>
+      </div>
+      <div class="coach"><strong>中文提示</strong><p>Charlie 追问时不要一次讲完所有技术。先讲业务流程和关键决策，再根据问题进入 RAG、权限、部署或失败处理。每个项目准备一个真实的“我改变了什么决定”。</p></div>
+    </section>
+
+    <section id="gaps">
+      <div class="section-head"><div class="section-no">06 / GAPS</div><div><h2>Be honest without underselling</h2><p class="section-summary">Name the gap precisely, show the adjacent evidence, and explain the concrete operating discipline you would use.</p></div></div>
+      <div class="grid grid-3">
+        <article class="card gap-card"><h3>Python as the primary language</h3><p>You have Python exposure through AI/computer-vision work, but your deepest production engineering history is broader: Java, JavaScript and data systems.</p><div class="answer"><strong>Say:</strong> “I would not claim the same depth in production Python as in my established stack. The underlying engineering practices transfer, and I’m deliberately using Python more deeply in my applied AI work.”</div></article>
+        <article class="card gap-card"><h3>Enterprise production AI</h3><p>You have credible prototypes and production software experience, but not years of enterprise GenAI systems operating at Nuix scale.</p><div class="answer"><strong>Say:</strong> “My honest gap is scale and duration in enterprise AI production—not ownership or production engineering. I would rather be precise about that and show how I reduce the risk.”</div></article>
+        <article class="card gap-card"><h3>Evaluation &amp; observability</h3><p>You understand the need, but should not imply a mature, long-running AI evaluation platform if you have not operated one.</p><div class="answer"><strong>Say:</strong> “Before launch I would define task-specific evals, failure categories, a baseline, human review and operational telemetry; after launch I would monitor quality, latency, cost and business outcomes.”</div></article>
+      </div>
+      <div class="script" style="margin-top:1rem"><button class="copy" type="button">Copy</button><div class="time">If challenged on the production requirement</div><blockquote>“That is a fair challenge. I would separate two things. I already have mature software-engineering experience: shipping systems, integrating services, debugging across environments and working directly with stakeholders. My enterprise GenAI production experience is newer, and I would not overstate it. The reason I believe I can make the step is that the missing part is specific operating depth in a new technical layer—not the fundamentals of ownership, system design or production delivery. I would approach the role with explicit evals, staged releases, observability and clear escalation rather than treating an impressive demo as production-ready.”</blockquote></div>
+    </section>
+
+    <section id="cloud">
+      <div class="section-head"><div class="section-no">07 / CLOUD</div><div><h2>AWS → Azure / M365 transferability</h2><p class="section-summary">Do not pretend the clouds are identical. Show that architecture principles transfer and name the learning surface.</p></div></div>
+      <div class="bridge">
+        <div class="bridge-box"><span class="tag">What you already bring</span><h3>AWS Solutions Architect – Associate</h3><p>Architecture trade-offs, identity and access, networking, compute, storage, reliability, cost awareness, observability and secure integration.</p></div>
+        <div class="bridge-arrow" aria-hidden="true">→</div>
+        <div class="bridge-box"><span class="tag">What you will learn</span><h3>Azure &amp; Microsoft 365 context</h3><p>Azure-native service choices, Entra ID, Microsoft Graph, governance conventions and the organisation’s deployment/tooling standards.</p></div>
+      </div>
+      <div class="script" style="margin-top:1rem"><button class="copy" type="button">Copy</button><div class="time">Suggested answer</div><blockquote>“My formal cloud certification is AWS Solutions Architect Associate, and AWS is where I have the strongest cloud foundation. I would not claim identical hands-on depth in Azure or Microsoft 365. What transfers is the architecture work: identity, least privilege, networking, data boundaries, resilience, observability, cost and choosing managed services appropriately. I would then map those principles to Nuix’s Azure and M365 environment—particularly Entra ID, Graph and the organisation’s governance and deployment standards. I have changed stacks throughout my career, so I’m confident in the transfer, but I would make the learning plan explicit rather than assume service names are interchangeable.”</blockquote></div>
+    </section>
+
+    <section id="screening">
+      <div class="section-head"><div class="section-no">08 / ANSWERS</div><div><h2>Likely interview questions</h2><p class="section-summary">Open each question to rehearse. Keep recruiter answers concise; let Charlie pull you deeper technically.</p></div></div>
+      <div class="questions">
+        <details class="question"><summary>Walk me through how you consult with a stakeholder on an unclear AI opportunity.</summary><div class="answer-body"><p class="say">“I begin with the workflow, not the model. I identify the user, trigger, current steps, hand-offs, pain, risk and what a better outcome would change. Then I separate automation from decision support, check data access and failure consequences, and define a small test with exit criteria. I play back the process in plain language before building. The outcome can be build, pause or abandon; a fast ‘no’ is useful if it is evidence-based.”</p><p><strong>Proof to attach:</strong> Love At Home for translating operational needs; e-commerce RAG for automation versus escalation.</p></div></details>
+        <details class="question"><summary>Tell me about a time you worked directly with a client or non-technical stakeholder.</summary><div class="answer-body"><p class="say">Use one real stakeholder from Love At Home. Explain what they needed in business language, where the initial request was ambiguous, how you confirmed the workflow, what trade-off you surfaced and how you demonstrated the result. Keep personal/client information private.</p><p><strong>Structure:</strong> context → misunderstanding/risk → your translation → shipped result → what you learnt.</p></div></details>
+        <details class="question"><summary>How do you decide whether a POC should become a production build?</summary><div class="answer-body"><p class="say">“I agree the decision criteria before the POC: user value, quality threshold, data availability, operational risk, integration effort, latency and cost. I test against representative cases, including failure cases. I recommend build only when the evidence supports both usefulness and operability. Otherwise I narrow the scope, pause for a missing dependency or abandon it—and document why.”</p></div></details>
+        <details class="question"><summary>How would you evaluate a RAG or agentic workflow?</summary><div class="answer-body"><p class="say">“I would split the system into stages: routing, retrieval, generation or tool selection, and the final business outcome. For each stage I would define a labelled test set and failure categories. I would measure retrieval relevance, groundedness, task completion, unsafe or unauthorised actions, latency and cost. High-risk actions need independent authorisation and human review. Production monitoring then checks drift and real failure patterns against the pre-launch baseline.”</p></div></details>
+        <details class="question"><summary>What does “Principal” mean if you are an individual contributor?</summary><div class="answer-body"><p class="say">“To me it means leverage and judgement, not just individual output. I should handle ambiguity with limited supervision, make sound build-versus-stop decisions, communicate with senior stakeholders, raise the engineering quality bar and leave reusable patterns that make other builders faster.”</p></div></details>
+        <details class="question"><summary>Why are you leaving your own projects for a company role?</summary><div class="answer-body"><p class="say">Use the established-company answer above. Emphasise that independent work proved ownership and clarified your appetite for collaboration, enterprise complexity and longer-term impact. Never frame the projects as wasted effort.</p></div></details>
+        <details class="question"><summary>Are you comfortable with three days per week in the Sydney office?</summary><div class="answer-body"><p class="say">“Yes. I am Sydney-based and comfortable with the three-day office expectation. For an embedded role, being present with the function and technical team is valuable for discovery, trust and rapid feedback.”</p></div></details>
+        <details class="question"><summary>What are your salary expectations, notice period and work rights?</summary><div class="answer-body"><p class="say"><strong>Do not memorise invented facts.</strong> State your exact work-rights and notice-period position. For salary: “I’m most interested in the role, scope and overall package. I’d be happy to understand the approved range and then confirm whether we are aligned.” If pressed, give the real range you have decided in advance.</p></div></details>
+      </div>
+    </section>
+
+    <section id="becky">
+      <div class="section-head"><div class="section-no">09 / QUESTIONS</div><div><h2>Thoughtful questions</h2><p class="section-summary">Use two with Becky; save technical operating-model questions for Charlie.</p></div></div>
+      <div class="grid grid-2">
+        <article class="card"><span class="tag">For Becky</span><h3>Process &amp; success</h3><ul><li>“What made the team most interested in my background, and where would they like to go deeper?”</li><li>“How is the interview process structured after the meeting with Charlie?”</li><li>“What would make someone clearly successful in the first six months?”</li><li>“Is this a newly created position, and how is the wider Builder cohort taking shape?”</li></ul></article>
+        <article class="card"><span class="tag">For Charlie / Tanya</span><h3>Operating model</h3><ul><li>“How are the first rotation opportunities selected and prioritised?”</li><li>“Who owns deployment, data access and risk decisions when a Builder embeds in a function?”</li><li>“What does the current evaluation and observability platform look like, and what would this role need to build?”</li><li>“How do Builders share reusable patterns without slowing down an individual rotation?”</li><li>“What would you want the person in this role to have shipped or changed by the end of the first year?”</li></ul></article>
+      </div>
+      <div class="coach"><strong>中文提示</strong><p>Becky 更适合流程、团队、成功标准；Charlie/Tanya 更适合架构、治理、数据权限、上线流程。问 2–3 个真正想知道的问题，不要机械全问。</p></div>
+    </section>
+
+    <section id="cheat">
+      <div class="cheat-sheet">
+        <div class="section-no" style="color:var(--mint)">10 / ONE-SCREEN CHEAT SHEET</div>
+        <h2>Before you walk in</h2>
+        <div class="cheat-grid">
+          <div class="cheat-item"><h3>Your headline</h3><p><strong>Experienced software/data engineer specialising in applied GenAI</strong>—production discipline, stakeholder fluency and honest about the next depth to build.</p></div>
+          <div class="cheat-item"><h3>Why this role</h3><p>Hands-on builder + business process + full lifecycle + enterprise constraints + reusable impact across rotations.</p></div>
+          <div class="cheat-item"><h3>Why a team now</h3><p>Independent work proved ownership. Now seek <strong>collaboration, harder enterprise problems and longer compounding impact</strong>.</p></div>
+          <div class="cheat-item"><h3>Three proof points</h3><ul><li>EvidMatch → grounded evidence &amp; trust boundaries</li><li>E-commerce RAG → retrieval, routing, escalation</li><li>Love At Home → client workflow, integrations, reliability</li></ul></div>
+          <div class="cheat-item"><h3>Gap language</h3><p>“I won’t overstate enterprise GenAI production depth. I do bring mature engineering ownership, and I reduce the gap through staged delivery, evals, observability and explicit risk controls.”</p></div>
+          <div class="cheat-item"><h3>Consulting loop</h3><p>Workflow first → value &amp; risk → data reality → time-boxed POC → exit criteria → build/pause/abandon → monitor → share patterns.</p></div>
+          <div class="cheat-item"><h3>Names &amp; logistics</h3><p><strong>Tue 10 Nov · 3 pm · Nuix Sydney office</strong><br>Charlie: Head of AI Enablement<br>Possible: Tanya, Head of IT / another interviewer</p></div>
+          <div class="cheat-item"><h3>Final reminders</h3><ul><li>Lead with the business workflow, not tools.</li><li>Say “prototype” when it is a prototype.</li><li>Use “I” for your decision; “we” for collaboration.</li><li>Pause after the answer. Let them ask deeper.</li></ul></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer"><span>Prepared for Nuix · Principal AI Enablement Builder</span><span>Local, self-contained HTML · No external assets</span></footer>
+  <script>
+    const navLinks = [...document.querySelectorAll('.nav a')];
+    const sections = [...document.querySelectorAll('main section')];
+    const observer = new IntersectionObserver(entries => {
+      const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (!visible) return;
+      navLinks.forEach(link => link.classList.toggle('active', link.hash === `#${visible.target.id}`));
+    }, { rootMargin: '-20% 0px -65% 0px', threshold: [0, .1, .4] });
+    sections.forEach(section => observer.observe(section));
+
+    document.querySelectorAll('.copy').forEach(button => button.addEventListener('click', async () => {
+      const text = button.parentElement.querySelector('blockquote').innerText;
+      try {
+        await navigator.clipboard.writeText(text);
+        const old = button.textContent;
+        button.textContent = 'Copied';
+        setTimeout(() => button.textContent = old, 1400);
+      } catch { button.textContent = 'Select text'; }
+    }));
+
+    function printPage(cheatOnly) {
+      document.body.classList.toggle('cheat-print', cheatOnly);
+      window.print();
+      setTimeout(() => document.body.classList.remove('cheat-print'), 400);
+    }
+    window.addEventListener('afterprint', () => document.body.classList.remove('cheat-print'));
+  </script>
+</body>
+</html>
