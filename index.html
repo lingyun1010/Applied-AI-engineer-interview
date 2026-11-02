@@ -60,7 +60,7 @@
     h1 span { color: var(--accent); }
     .hero-lede { max-width: 720px; margin: 1.6rem 0 0; font-size: clamp(1.05rem, 2vw, 1.35rem); color: var(--muted); }
     .interview-card { position: relative; overflow: hidden; background: var(--ink); color: white; padding: 1.5rem; border-radius: var(--radius); box-shadow: var(--shadow); }
-    .interview-card::after { content: "11"; position: absolute; right: -1rem; bottom: -3.8rem; font-size: 10rem; font-weight: 900; color: rgba(255,255,255,.06); }
+    .interview-card::after { content: "12"; position: absolute; right: -1rem; bottom: -3.8rem; font-size: 10rem; font-weight: 900; color: rgba(255,255,255,.06); }
     .interview-card .label { color: var(--mint); font-size: .75rem; font-weight: 850; letter-spacing: .1em; text-transform: uppercase; }
     .interview-card strong { display: block; font-size: 1.6rem; margin: .35rem 0; }
     .interview-card p { margin: .25rem 0; color: rgba(255,255,255,.72); }
@@ -185,7 +185,7 @@
     <div class="topbar-inner">
       <div class="brand"><span class="brand-mark">N</span><span>Nuix interview prep</span></div>
       <nav class="nav" aria-label="Page sections">
-        <a href="#overview">Role</a><a href="#intro">Introduction</a><a href="#why">Why Nuix</a><a href="#company">Why a team</a><a href="#projects">Projects</a><a href="#gaps">Gaps</a><a href="#cloud">Cloud</a><a href="#evaluation">Evaluation</a><a href="#screening">Answers</a><a href="#becky">Ask Becky</a><a href="#cheat">Cheat sheet</a>
+        <a href="#overview">Role</a><a href="#intro">Introduction</a><a href="#why">Why Nuix</a><a href="#company">Why a team</a><a href="#projects">Projects</a><a href="#gaps">Gaps</a><a href="#cloud">Cloud</a><a href="#evaluation">Evaluation</a><a href="#mock">Mock case</a><a href="#screening">Answers</a><a href="#becky">Ask Becky</a><a href="#cheat">Cheat sheet</a>
       </nav>
       <div class="actions">
         <button class="btn" type="button" onclick="printPage(false)">Print all</button>
@@ -242,16 +242,12 @@
     </section>
 
     <section id="intro">
-      <div class="section-head"><div class="section-no">02 / INTRO</div><div><h2>Your opening</h2><p class="section-summary">Use the shorter version first. Expand only when the interviewer gives you room.</p></div></div>
+      <div class="section-head"><div class="section-no">02 / INTRO</div><div><h2>Your opening</h2><p class="section-summary">One primary answer, rebuilt from the mock interview: lead with proven engineering depth, then applied AI evidence, then the value you can bring to Nuix.</p></div></div>
       <div class="script">
-        <button class="copy" type="button">Copy</button><div class="time">60-second version</div>
-        <blockquote>“I’m an experienced software and data engineer who has been moving deliberately into applied AI. I have a PhD in computer vision and more than seven years of engineering experience across Java, JavaScript, React, APIs, AWS, Docker, PostgreSQL and data platforms. More recently, I’ve been building GenAI systems that combine retrieval, structured knowledge, routing, tool use and human review—through EvidMatch, an e-commerce RAG support prototype and the Love At Home platform. What attracts me to this role is that it is not an advisory AI position. It starts with an ambiguous operational problem and expects one person to work with stakeholders, structure the use case, build the solution and stay accountable after launch. That combination of hands-on delivery, business process and enterprise impact is exactly where I want to take my next step.”</blockquote>
+        <button class="copy" type="button">Copy</button><div class="time">Primary answer · approximately 2 minutes</div>
+        <blockquote>“Nice to meet you too, Charlie. Thanks for having me.<br><br>My background combines research, software engineering and, more recently, applied AI. I started with a PhD in computer vision, but during my research I realised I was more interested in applying technology to real-world problems than focusing purely on academic research.<br><br>I then spent more than seven years at EMBL-EBI in the UK, working on Expression Atlas, a large-scale bioinformatics platform. I worked across full-stack development, backend APIs, data integration and visualisation, and collaborated closely with scientists and other stakeholders to turn complex requirements into usable software.<br><br>Since relocating to Sydney, I have focused on applied AI. I built EvidMatch, a platform that helps professionals demonstrate their skills through evidence-based portfolios and match with opportunities. That has given me hands-on experience with LLM integration, AI matching workflows and the engineering challenges around reliability, data access and deployment. I have also worked with local businesses on digital transformation. For Love At Home, I worked directly with the business to understand operational problems and deliver a practical digital workflow.<br><br>What attracts me to Nuix is the combination of technical delivery and business problem-solving. I enjoy working with people to understand their problems, but I also want to be the person who builds and delivers the solution. That is how I see this role: taking an ambiguous business challenge, identifying where AI can genuinely add value, and turning it into something useful and measurable.”</blockquote>
       </div>
-      <div class="script">
-        <button class="copy" type="button">Copy</button><div class="time">90-second version</div>
-        <blockquote>“My background combines research depth with practical software delivery. I completed a PhD in computer vision at Queen Mary University of London, then spent more than seven years in software and big-data engineering, working across backend services, frontend products, APIs, AWS, Docker, PostgreSQL, Solr, testing and deployment. That gave me strong production habits: clarify the problem, design for failure, make trade-offs explicit and work closely with the people who use the system.<br><br>Over the last phase of my career, I’ve focused that engineering experience on applied GenAI. EvidMatch explores how structured project evidence can become trustworthy, reviewable outputs; my e-commerce RAG prototype combines structured product and policy knowledge with intent routing and escalation; and Love At Home is a real service-business platform where I have had to connect product decisions with operational workflows, reliability and privacy.<br><br>I’m honest that my enterprise AI production depth is still developing. I’m not presenting prototypes as years of large-scale production AI. What I do bring is mature engineering judgement, direct stakeholder experience and evidence that I can learn and build quickly. Nuix is compelling because the role turns those strengths into full-lifecycle AI delivery inside complex functions, with a team, governance and real organisational impact.”</blockquote>
-      </div>
-      <div class="coach"><strong>中文提示</strong><p>开场顺序：成熟工程师 → 应用 AI 转型 → 三个证据 → 为什么这个岗位。不要从“我缺少什么”开始；差距放在最后主动、简短、可控地说明。</p></div>
+      <div class="coach"><strong>模拟面试后的调整</strong><p>控制在两分钟内。搬到悉尼只用一句话交代；不要把重点放在“我想提高自己”，而要证明你已经能把复杂需求变成软件，并说明你能为 Nuix 带来什么。开场不主动讨论差距，等对方追问 production depth 时再使用 Gaps 区域的答案。</p></div>
     </section>
 
     <section id="why">
@@ -341,8 +337,25 @@
       </div>
     </section>
 
+    <section id="mock">
+      <div class="section-head"><div class="section-no">09 / MOCK INTERVIEW</div><div><h2>Case: EvidMatch AI Match</h2><p class="section-summary">This is the technical story refined in the mock interview. It complements the project summary and evaluation section rather than repeating them.</p></div></div>
+
+      <div class="grid grid-3">
+        <article class="card signal"><span class="tag">What worked</span><h3>Product judgement</h3><p>The two-stage design makes the trade-off clear: give users a fast shortlist first, then spend LLM time only where deeper evidence-based analysis adds value.</p></article>
+        <article class="card signal"><span class="tag">What to correct</span><h3>Technical precision</h3><p>Call the first stage <strong>hybrid matching</strong>: keyword scoring plus semantic similarity. Do not call vector ranking itself RAG, and do not use “cached” and “offline” as synonyms.</p></article>
+        <article class="card signal"><span class="tag">What to add</span><h3>Operating reality</h3><p>Name the constraints—latency, model cost, failure handling and unsupported claims—then discuss the evaluation plan only if asked. Do not imply a mature harness already exists.</p></article>
+      </div>
+
+      <div class="script" style="margin-top:1rem">
+        <button class="copy" type="button">Copy</button><div class="time">Mock round 2 · technical delivery · 2–3 minutes</div>
+        <blockquote>“One of the core AI features I built in EvidMatch is a two-stage job matching system. The design was driven by a practical trade-off between matching quality, response latency and inference cost.<br><br>We ingest opportunities from public ATS sources, normalise the job content and create embeddings for semantic comparison. Users build evidence-based portfolios containing their projects, skills and demonstrated experience.<br><br>The first stage is Quick Match. It uses hybrid matching—keyword-based scoring together with semantic similarity—to rank opportunities without making a generative LLM call for every job. This gives the user a fast shortlist and avoids paying the latency and token cost of detailed analysis across the full opportunity set.<br><br>When a user wants to investigate a particular role, they can request a Detailed AI Match. This second stage uses an LLM to compare the job requirements with evidence from the user’s portfolio. It separates strong matches, partially supported requirements and missing evidence. An important design principle is that the system should not invent qualifications or experience. It can help the user express existing evidence more clearly, but it must identify unsupported requirements as gaps.<br><br>The main engineering challenge is balancing usefulness with latency, cost and reliability. I use controlled access to expensive model calls and design the request flow so failures are visible rather than silently producing misleading results. The evaluation framework is the next maturity step: a versioned, human-reviewed dataset and repeatable ranking metrics would let me compare changes objectively rather than relying on anecdotal examples.”</blockquote>
+      </div>
+
+      <div class="coach"><strong>中文提示</strong><p>回答顺序固定为：为什么做两阶段 → Quick Match 实际做什么 → Detailed Match 为什么需要 LLM → 防止编造证据 → 一个真实工程约束。这里不要重复解释 Precision@5、MRR、NDCG@5；若 Charlie 追问 evaluation，再跳到上一节。</p></div>
+    </section>
+
     <section id="screening">
-      <div class="section-head"><div class="section-no">09 / ANSWERS</div><div><h2>Likely interview questions</h2><p class="section-summary">Open each question to rehearse. Keep recruiter answers concise; let Charlie pull you deeper technically.</p></div></div>
+      <div class="section-head"><div class="section-no">10 / ANSWERS</div><div><h2>Likely interview questions</h2><p class="section-summary">Open each question to rehearse. Keep recruiter answers concise; let Charlie pull you deeper technically.</p></div></div>
       <div class="questions">
         <details class="question"><summary>Walk me through how you consult with a stakeholder on an unclear AI opportunity.</summary><div class="answer-body"><p class="say">“I begin with the workflow, not the model. I identify the user, trigger, current steps, hand-offs, pain, risk and what a better outcome would change. Then I separate automation from decision support, check data access and failure consequences, and define a small test with exit criteria. I play back the process in plain language before building. The outcome can be build, pause or abandon; a fast ‘no’ is useful if it is evidence-based.”</p><p><strong>Proof to attach:</strong> Love At Home for translating operational needs; e-commerce RAG for automation versus escalation.</p></div></details>
         <details class="question"><summary>Tell me about a time you worked directly with a client or non-technical stakeholder.</summary><div class="answer-body"><p class="say">Use one real stakeholder from Love At Home. Explain what they needed in business language, where the initial request was ambiguous, how you confirmed the workflow, what trade-off you surfaced and how you demonstrated the result. Keep personal/client information private.</p><p><strong>Structure:</strong> context → misunderstanding/risk → your translation → shipped result → what you learnt.</p></div></details>
@@ -356,7 +369,7 @@
     </section>
 
     <section id="becky">
-      <div class="section-head"><div class="section-no">10 / QUESTIONS</div><div><h2>Thoughtful questions</h2><p class="section-summary">Use two with Becky; save technical operating-model questions for Charlie.</p></div></div>
+      <div class="section-head"><div class="section-no">11 / QUESTIONS</div><div><h2>Thoughtful questions</h2><p class="section-summary">Use two with Becky; save technical operating-model questions for Charlie.</p></div></div>
       <div class="grid grid-2">
         <article class="card"><span class="tag">For Becky</span><h3>Process &amp; success</h3><ul><li>“What made the team most interested in my background, and where would they like to go deeper?”</li><li>“How is the interview process structured after the meeting with Charlie?”</li><li>“What would make someone clearly successful in the first six months?”</li><li>“Is this a newly created position, and how is the wider Builder cohort taking shape?”</li></ul></article>
         <article class="card"><span class="tag">For Charlie / Tanya</span><h3>Operating model</h3><ul><li>“How are the first rotation opportunities selected and prioritised?”</li><li>“Who owns deployment, data access and risk decisions when a Builder embeds in a function?”</li><li>“What does the current evaluation and observability platform look like, and what would this role need to build?”</li><li>“How do Builders share reusable patterns without slowing down an individual rotation?”</li><li>“What would you want the person in this role to have shipped or changed by the end of the first year?”</li></ul></article>
@@ -366,7 +379,7 @@
 
     <section id="cheat">
       <div class="cheat-sheet">
-        <div class="section-no" style="color:var(--mint)">11 / ONE-SCREEN CHEAT SHEET</div>
+        <div class="section-no" style="color:var(--mint)">12 / ONE-SCREEN CHEAT SHEET</div>
         <h2>Before you walk in</h2>
         <div class="cheat-grid">
           <div class="cheat-item"><h3>Your headline</h3><p><strong>Experienced software/data engineer specialising in applied GenAI</strong>—production discipline, stakeholder fluency and honest about the next depth to build.</p></div>
