@@ -60,7 +60,7 @@
     h1 span { color: var(--accent); }
     .hero-lede { max-width: 720px; margin: 1.6rem 0 0; font-size: clamp(1.05rem, 2vw, 1.35rem); color: var(--muted); }
     .interview-card { position: relative; overflow: hidden; background: var(--ink); color: white; padding: 1.5rem; border-radius: var(--radius); box-shadow: var(--shadow); }
-    .interview-card::after { content: "10"; position: absolute; right: -1rem; bottom: -3.8rem; font-size: 10rem; font-weight: 900; color: rgba(255,255,255,.06); }
+    .interview-card::after { content: "11"; position: absolute; right: -1rem; bottom: -3.8rem; font-size: 10rem; font-weight: 900; color: rgba(255,255,255,.06); }
     .interview-card .label { color: var(--mint); font-size: .75rem; font-weight: 850; letter-spacing: .1em; text-transform: uppercase; }
     .interview-card strong { display: block; font-size: 1.6rem; margin: .35rem 0; }
     .interview-card p { margin: .25rem 0; color: rgba(255,255,255,.72); }
@@ -185,7 +185,7 @@
     <div class="topbar-inner">
       <div class="brand"><span class="brand-mark">N</span><span>Nuix interview prep</span></div>
       <nav class="nav" aria-label="Page sections">
-        <a href="#overview">Role</a><a href="#intro">Introduction</a><a href="#why">Why Nuix</a><a href="#company">Why a team</a><a href="#projects">Projects</a><a href="#gaps">Gaps</a><a href="#cloud">Cloud</a><a href="#screening">Answers</a><a href="#becky">Ask Becky</a><a href="#cheat">Cheat sheet</a>
+        <a href="#overview">Role</a><a href="#intro">Introduction</a><a href="#why">Why Nuix</a><a href="#company">Why a team</a><a href="#projects">Projects</a><a href="#gaps">Gaps</a><a href="#cloud">Cloud</a><a href="#evaluation">Evaluation</a><a href="#screening">Answers</a><a href="#becky">Ask Becky</a><a href="#cheat">Cheat sheet</a>
       </nav>
       <div class="actions">
         <button class="btn" type="button" onclick="printPage(false)">Print all</button>
@@ -317,8 +317,32 @@
       <div class="script" style="margin-top:1rem"><button class="copy" type="button">Copy</button><div class="time">Suggested answer</div><blockquote>“My formal cloud certification is AWS Solutions Architect Associate, and AWS is where I have the strongest cloud foundation. I would not claim identical hands-on depth in Azure or Microsoft 365. What transfers is the architecture work: identity, least privilege, networking, data boundaries, resilience, observability, cost and choosing managed services appropriately. I would then map those principles to Nuix’s Azure and M365 environment—particularly Entra ID, Graph and the organisation’s governance and deployment standards. I have changed stacks throughout my career, so I’m confident in the transfer, but I would make the learning plan explicit rather than assume service names are interchangeable.”</blockquote></div>
     </section>
 
+    <section id="evaluation">
+      <div class="section-head"><div class="section-no">08 / AI EVALUATION</div><div><h2>Make AI quality measurable</h2><p class="section-summary">Use EvidMatch to explain how a representative dataset, repeatable harness and complementary ranking metrics turn AI changes into evidence rather than opinion.</p></div></div>
+
+      <div class="grid grid-3">
+        <article class="card signal"><span class="tag">Precision@5</span><h3>How many are useful?</h3><p>If labels of 2 or 3 count as relevant and the top-five labels are <strong>[1, 3, 2, 0, 3]</strong>, three of five are relevant: <strong>3 ÷ 5 = 0.60</strong>.</p><p>It measures the concentration of good results, but ignores their order.</p></article>
+        <article class="card signal"><span class="tag">MRR</span><h3>How soon is the first useful result?</h3><p>The first relevant result above is at rank 2, so the reciprocal rank is <strong>1 ÷ 2 = 0.50</strong>. MRR averages that value across profiles.</p><p>It rewards finding one suitable opportunity quickly, but ignores later results.</p></article>
+        <article class="card signal"><span class="tag">NDCG@5</span><h3>Are the best results near the top?</h3><p>It gives more gain to label 3 than label 2, discounts results lower in the list, then compares the actual order with the ideal order.</p><p><strong>1.0</strong> means the ranking matches the best possible ordering.</p></article>
+      </div>
+
+      <div class="coach"><strong>中文记忆法</strong><p>Precision@5 看前五名里“好职位有多少”；MRR 看“第一个好职位来得多快”；NDCG@5 同时看“好到什么程度”和“排得够不够靠前”。对 EvidMatch，以 NDCG@5 为主、Precision@5 为辅，MRR 补充衡量首次发现好机会的速度。</p></div>
+
+      <div class="script" style="margin-top:1rem"><button class="copy" type="button">Copy</button><div class="time">Interview answer · ranking evaluation</div><blockquote>“For evaluating Quick Match, I would use complementary ranking metrics. Precision at five measures how many of the top five recommendations are relevant according to human-labelled ground truth. MRR measures how early the first relevant result appears. NDCG at five considers both relevance levels and ranking positions, so it rewards systems that put the most relevant jobs nearer the top. For EvidMatch, I would use NDCG at five as the primary ranking metric, supported by Precision at five and MRR.”</blockquote></div>
+
+      <div class="questions" style="margin-top:1rem">
+        <details class="question"><summary>Is an evaluation harness just an integration test?</summary><div class="answer-body"><p class="say">“A test harness is the infrastructure that automates test execution, collects results and reports outcomes. For AI systems, an evaluation harness goes beyond traditional unit and integration testing. It runs a representative dataset through the workflow, compares outputs with expected behaviour or ground truth, calculates quality metrics and highlights regressions when prompts, models, retrieval strategies or ranking logic change.”</p><p><strong>Remember:</strong> test case = what to test; dataset = what data to test with; harness = how to run, record and compare; metrics = how to judge quality.</p></div></details>
+
+        <details class="question"><summary>Do we need to write new Golden Labels for every evaluation run?</summary><div class="answer-body"><p class="say">“No. I would maintain a versioned golden evaluation dataset, initially using synthetic profiles and human-reviewed relevance labels. The same labels can be reused across many algorithm versions, which gives us a consistent comparison. New human annotation is needed when we add new profiles or jobs, materially change an example, or correct unreliable ground truth—not whenever we change a weight, embedding model or retrieval strategy.”</p><p><strong>Dataset strategy:</strong> keep a fixed golden test set for regression comparison, a development set for tuning, and a consented real-world feedback set for discovering new failure cases. AI can propose labels and evidence, but a proposed label is not a human-verified Golden Label.</p></div></details>
+
+        <details class="question"><summary>How do content hashing, incremental indexing and batch processing work together?</summary><div class="answer-body"><p class="say">“For profile knowledge, content hashes let us detect new or changed chunks and regenerate only the embeddings that are stale, rather than re-embedding the entire profile. For job ingestion, controlled batches limit individual request size and help manage latency, memory and API constraints. Persisted hashes, model versions and completion state then allow later runs to identify missing or stale work instead of recomputing everything.”</p><p><strong>Important distinction:</strong> incremental indexing decides <em>which items</em> need work; batching decides <em>how many items</em> to process at once. Batching alone does not guarantee partial retry—the system must persist successful results and track pending or failed items.</p></div></details>
+
+        <details class="question"><summary>How would the Golden Dataset evolve?</summary><div class="answer-body"><p class="say">“I would start with synthetic profiles and a representative snapshot of jobs, then have people review relevance labels on a clear zero-to-three rubric. As authorised real-world examples become available, I would add them gradually, minimise personal data and keep dataset versions separate from evaluation runs. I would also avoid treating clicks or applications as perfect relevance labels, because user behaviour can be affected by location, timing or other constraints.”</p><p><strong>Truth boundary:</strong> a proposed command such as <code>pnpm eval:quick-match</code> describes the harness we would build; do not imply that command or a mature benchmark already exists until it has been implemented and verified.</p></div></details>
+      </div>
+    </section>
+
     <section id="screening">
-      <div class="section-head"><div class="section-no">08 / ANSWERS</div><div><h2>Likely interview questions</h2><p class="section-summary">Open each question to rehearse. Keep recruiter answers concise; let Charlie pull you deeper technically.</p></div></div>
+      <div class="section-head"><div class="section-no">09 / ANSWERS</div><div><h2>Likely interview questions</h2><p class="section-summary">Open each question to rehearse. Keep recruiter answers concise; let Charlie pull you deeper technically.</p></div></div>
       <div class="questions">
         <details class="question"><summary>Walk me through how you consult with a stakeholder on an unclear AI opportunity.</summary><div class="answer-body"><p class="say">“I begin with the workflow, not the model. I identify the user, trigger, current steps, hand-offs, pain, risk and what a better outcome would change. Then I separate automation from decision support, check data access and failure consequences, and define a small test with exit criteria. I play back the process in plain language before building. The outcome can be build, pause or abandon; a fast ‘no’ is useful if it is evidence-based.”</p><p><strong>Proof to attach:</strong> Love At Home for translating operational needs; e-commerce RAG for automation versus escalation.</p></div></details>
         <details class="question"><summary>Tell me about a time you worked directly with a client or non-technical stakeholder.</summary><div class="answer-body"><p class="say">Use one real stakeholder from Love At Home. Explain what they needed in business language, where the initial request was ambiguous, how you confirmed the workflow, what trade-off you surfaced and how you demonstrated the result. Keep personal/client information private.</p><p><strong>Structure:</strong> context → misunderstanding/risk → your translation → shipped result → what you learnt.</p></div></details>
@@ -332,7 +356,7 @@
     </section>
 
     <section id="becky">
-      <div class="section-head"><div class="section-no">09 / QUESTIONS</div><div><h2>Thoughtful questions</h2><p class="section-summary">Use two with Becky; save technical operating-model questions for Charlie.</p></div></div>
+      <div class="section-head"><div class="section-no">10 / QUESTIONS</div><div><h2>Thoughtful questions</h2><p class="section-summary">Use two with Becky; save technical operating-model questions for Charlie.</p></div></div>
       <div class="grid grid-2">
         <article class="card"><span class="tag">For Becky</span><h3>Process &amp; success</h3><ul><li>“What made the team most interested in my background, and where would they like to go deeper?”</li><li>“How is the interview process structured after the meeting with Charlie?”</li><li>“What would make someone clearly successful in the first six months?”</li><li>“Is this a newly created position, and how is the wider Builder cohort taking shape?”</li></ul></article>
         <article class="card"><span class="tag">For Charlie / Tanya</span><h3>Operating model</h3><ul><li>“How are the first rotation opportunities selected and prioritised?”</li><li>“Who owns deployment, data access and risk decisions when a Builder embeds in a function?”</li><li>“What does the current evaluation and observability platform look like, and what would this role need to build?”</li><li>“How do Builders share reusable patterns without slowing down an individual rotation?”</li><li>“What would you want the person in this role to have shipped or changed by the end of the first year?”</li></ul></article>
@@ -342,7 +366,7 @@
 
     <section id="cheat">
       <div class="cheat-sheet">
-        <div class="section-no" style="color:var(--mint)">10 / ONE-SCREEN CHEAT SHEET</div>
+        <div class="section-no" style="color:var(--mint)">11 / ONE-SCREEN CHEAT SHEET</div>
         <h2>Before you walk in</h2>
         <div class="cheat-grid">
           <div class="cheat-item"><h3>Your headline</h3><p><strong>Experienced software/data engineer specialising in applied GenAI</strong>—production discipline, stakeholder fluency and honest about the next depth to build.</p></div>
@@ -351,6 +375,7 @@
           <div class="cheat-item"><h3>Three proof points</h3><ul><li>EvidMatch → grounded evidence &amp; trust boundaries</li><li>E-commerce RAG → retrieval, routing, escalation</li><li>Love At Home → client workflow, integrations, reliability</li></ul></div>
           <div class="cheat-item"><h3>Gap language</h3><p>“I won’t overstate enterprise GenAI production depth. I do bring mature engineering ownership, and I reduce the gap through staged delivery, evals, observability and explicit risk controls.”</p></div>
           <div class="cheat-item"><h3>Consulting loop</h3><p>Workflow first → value &amp; risk → data reality → time-boxed POC → exit criteria → build/pause/abandon → monitor → share patterns.</p></div>
+          <div class="cheat-item"><h3>Evaluation language</h3><p><strong>Dataset</strong> = examples and labels · <strong>Harness</strong> = run, record and compare · <strong>Metrics</strong> = judge quality · NDCG@5 primary, Precision@5 and MRR supporting.</p></div>
           <div class="cheat-item"><h3>Names &amp; logistics</h3><p><strong>Tue 10 Nov · 3 pm · Nuix Sydney office</strong><br>Charlie: Head of AI Enablement<br>Possible: Tanya, Head of IT / another interviewer</p></div>
           <div class="cheat-item"><h3>Final reminders</h3><ul><li>Lead with the business workflow, not tools.</li><li>Say “prototype” when it is a prototype.</li><li>Use “I” for your decision; “we” for collaboration.</li><li>Pause after the answer. Let them ask deeper.</li></ul></div>
         </div>
