@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Engineering methods and interview-ready examples for the Nuix Principal AI Enablement Builder interview.">
+  <title>Engineering Playbook · Nuix Interview Preparation</title>
+  <style>
+    :root { --ink:#15231f; --muted:#5d6b65; --paper:#f4f0e8; --card:#fffdf8; --accent:#ff5a36; --mint:#bce8d5; --mint-dark:#0f6551; --line:rgba(21,35,31,.15); --shadow:0 18px 55px rgba(35,49,43,.11); --radius:22px; --max:1180px; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; scroll-padding-top:90px; }
+    body { margin:0; color:var(--ink); background:radial-gradient(circle at 90% 0%,rgba(188,232,213,.7),transparent 28rem),linear-gradient(180deg,#fbf8f1,var(--paper)); font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; line-height:1.65; }
+    a { color:inherit; } button { font:inherit; }
+    .skip { position:fixed; left:1rem; top:-4rem; z-index:50; padding:.7rem 1rem; color:white; background:var(--ink); border-radius:10px; } .skip:focus { top:1rem; }
+    .topbar { position:sticky; top:0; z-index:30; border-bottom:1px solid var(--line); background:rgba(251,248,241,.92); backdrop-filter:blur(16px); }
+    .topbar-inner { max-width:var(--max); margin:auto; padding:.8rem 1.25rem; display:flex; align-items:center; gap:1rem; }
+    .brand { display:flex; align-items:center; gap:.65rem; min-width:max-content; text-decoration:none; font-weight:850; }
+    .brand-mark { width:2rem; height:2rem; display:grid; place-items:center; border-radius:9px; color:var(--mint); background:var(--ink); }
+    nav { flex:1; display:flex; gap:.35rem; overflow-x:auto; scrollbar-width:none; } nav::-webkit-scrollbar { display:none; }
+    nav a { white-space:nowrap; text-decoration:none; color:var(--muted); font-size:.85rem; font-weight:750; padding:.48rem .68rem; border-radius:999px; } nav a:hover { color:var(--ink); background:white; }
+    .btn { border:1px solid var(--ink); background:var(--ink); color:white; padding:.55rem .8rem; border-radius:999px; cursor:pointer; font-weight:750; }
+    .hero { max-width:var(--max); margin:auto; padding:5rem 1.25rem 3rem; display:grid; grid-template-columns:1.25fr .75fr; gap:2rem; align-items:end; }
+    .eyebrow { color:#bf321b; font-weight:850; letter-spacing:.11em; text-transform:uppercase; font-size:.77rem; }
+    h1,h2,h3 { line-height:1.08; letter-spacing:-.04em; } h1 { margin:.7rem 0 1.2rem; font-size:clamp(3rem,7vw,6.4rem); } h1 span { color:var(--accent); }
+    .lede { max-width:750px; color:var(--muted); font-size:clamp(1.05rem,2vw,1.3rem); }
+    .principle { padding:1.5rem; color:white; background:var(--ink); border-radius:var(--radius); box-shadow:var(--shadow); } .principle strong { display:block; color:var(--mint); font-size:1.4rem; } .principle p { margin:.6rem 0 0; color:rgba(255,255,255,.76); }
+    main { max-width:var(--max); margin:auto; padding:0 1.25rem 5rem; } section { margin:5rem 0; }
+    .section-head { display:grid; grid-template-columns:115px 1fr; gap:1rem; margin-bottom:2rem; } .section-no { color:var(--accent); font-size:.82rem; font-weight:900; letter-spacing:.11em; } h2 { margin:0; font-size:clamp(2.1rem,5vw,4rem); } .summary { max-width:780px; margin:.8rem 0 0; color:var(--muted); font-size:1.05rem; }
+    .grid { display:grid; gap:1rem; } .grid-2 { grid-template-columns:repeat(2,minmax(0,1fr)); } .grid-3 { grid-template-columns:repeat(3,minmax(0,1fr)); }
+    .card { background:rgba(255,253,248,.9); border:1px solid var(--line); border-radius:var(--radius); padding:1.5rem; box-shadow:0 8px 28px rgba(35,49,43,.05); } .card h3 { margin:.6rem 0 .7rem; font-size:1.35rem; } .card p:last-child,.card ul:last-child { margin-bottom:0; }
+    .tag { display:inline-block; padding:.27rem .55rem; border-radius:999px; background:var(--mint); color:var(--mint-dark); font-size:.71rem; font-weight:850; letter-spacing:.04em; text-transform:uppercase; }
+    .flow { counter-reset:step; } .step { position:relative; padding-left:4.8rem; } .step::before { counter-increment:step; content:"0" counter(step); position:absolute; left:1.35rem; top:1.25rem; color:var(--accent); font-size:1.55rem; font-weight:900; }
+    .boundary { border-top:4px solid var(--accent); } .boundary:nth-child(2) { border-color:var(--mint-dark); } .boundary:nth-child(3) { border-color:#8157c6; }
+    .ladder { display:grid; gap:.7rem; } .rung { display:grid; grid-template-columns:155px 1fr; gap:1rem; padding:1rem 1.2rem; background:var(--card); border:1px solid var(--line); border-radius:16px; } .rung strong { color:var(--mint-dark); }
+    .script { position:relative; padding:clamp(1.35rem,3vw,2rem); color:white; background:var(--ink); border-radius:var(--radius); } .script+.script { margin-top:1rem; } .script .label { color:var(--mint); font-size:.76rem; font-weight:850; letter-spacing:.1em; text-transform:uppercase; } .script blockquote { margin:.75rem 0 0; font-size:clamp(1.01rem,2vw,1.16rem); line-height:1.75; }
+    .copy { position:absolute; right:1rem; top:1rem; border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.08); color:white; border-radius:999px; padding:.4rem .7rem; cursor:pointer; font-size:.75rem; }
+    .coach { margin-top:1rem; padding:1rem 1.15rem; border-left:4px solid var(--accent); border-radius:0 16px 16px 0; background:#fff4e9; color:#6d493e; } .coach strong { display:block; color:#bf321b; }
+    details { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:0 1.2rem; } details+details { margin-top:.7rem; } summary { cursor:pointer; list-style:none; padding:1.05rem 2rem 1.05rem 0; font-weight:850; position:relative; } summary::-webkit-details-marker { display:none; } summary::after { content:"+"; position:absolute; right:0; color:var(--accent); font-size:1.3rem; } details[open] summary::after { content:"−"; } .answer { padding:0 0 1.2rem; color:var(--muted); } .answer .say { padding-left:1rem; color:var(--ink); border-left:3px solid var(--mint-dark); }
+    .truth { padding:1.3rem; border:1px solid var(--line); border-radius:18px; background:#fffaf3; }
+    footer { max-width:var(--max); margin:auto; padding:2rem 1.25rem 4rem; border-top:1px solid var(--line); color:var(--muted); display:flex; justify-content:space-between; gap:1rem; font-size:.88rem; }
+    @media (max-width:850px) { .hero,.grid-3 { grid-template-columns:1fr; } .grid-2 { grid-template-columns:1fr; } .section-head { grid-template-columns:1fr; } .principle { max-width:600px; } }
+    @media (max-width:620px) { .brand span:last-child { display:none; } .topbar-inner,.hero,main { padding-left:1rem; padding-right:1rem; } .hero { padding-top:3.5rem; } section { margin:4rem 0; } .rung { grid-template-columns:1fr; gap:.25rem; } footer { flex-direction:column; } }
+    @media print { @page { margin:14mm; size:A4; } body { background:white; font-size:10pt; } .topbar,.copy,footer { display:none!important; } .hero { padding:0 0 1rem; grid-template-columns:1.2fr .8fr; } h1 { font-size:34pt; } main { padding:0; } section { margin:1.4rem 0; } h2 { font-size:22pt; } .section-head { grid-template-columns:70px 1fr; margin-bottom:.8rem; } .card,.script,.principle,details { break-inside:avoid; box-shadow:none; } details .answer { display:block; } }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#approach">Skip to engineering playbook</a>
+  <header class="topbar"><div class="topbar-inner">
+    <a class="brand" href="index.html"><span class="brand-mark">N</span><span>Nuix interview prep</span></a>
+    <nav aria-label="Engineering playbook sections"><a href="#approach">Approach</a><a href="#delivery">Delivery</a><a href="#boundaries">Boundaries</a><a href="#automation">AI controls</a><a href="#proof">Proof</a><a href="#answers">Answers</a><a href="index.html">← Main guide</a></nav>
+    <button class="btn" type="button" onclick="window.print()">Print</button>
+  </div></header>
+
+  <div class="hero">
+    <div><div class="eyebrow">Engineering methods · interview evidence</div><h1>Move fast.<br><span>Keep control.</span></h1><p class="lede">A practical playbook for using AI coding tools without outsourcing judgement: define boundaries, deliver one testable slice, enforce trust at the data layer, and leave evidence another engineer can review.</p></div>
+    <aside class="principle"><strong>AI accelerates implementation. Humans own the boundaries.</strong><p>Scope, permissions, sensitive data, production changes and release decisions remain explicit human responsibilities.</p></aside>
+  </div>
+
+  <main>
+    <section id="approach">
+      <div class="section-head"><div class="section-no">01 / APPROACH</div><div><h2>Boundary-first engineering</h2><p class="summary">Before choosing a model or generating code, make the product, authority and evidence boundaries concrete.</p></div></div>
+      <div class="grid grid-3">
+        <article class="card boundary"><span class="tag">Scope</span><h3>Decide what this phase is</h3><p>Sort work into launch, fast-follow and later. Record what is explicitly excluded so an AI tool cannot quietly expand the solution.</p></article>
+        <article class="card boundary"><span class="tag">Authority</span><h3>Map who can see and do what</h3><p>Turn roles × resources × actions into a permissions matrix. Each meaningful cell becomes a database rule and an allowed or forbidden test.</p></article>
+        <article class="card boundary"><span class="tag">Evidence</span><h3>Agree how “ready” will be proved</h3><p>Define quality, security, latency, cost and operational exit criteria before the POC. A demo is evidence of possibility, not production readiness.</p></article>
+      </div>
+      <div class="script" style="margin-top:1rem"><button class="copy" type="button">Copy</button><div class="label">Interview answer · how I start</div><blockquote>“I start with the workflow and the boundaries, not the model. I identify the user, the decision or hand-off we are improving, what data is involved, who is allowed to see or change it, and what success and failure would look like. I then define the smallest slice that can test the risky assumption. That gives the AI implementation context, but it also gives the team a clear basis for reviewing whether the result is useful, safe and worth extending.”</blockquote></div>
+      <div class="coach"><strong>中文提示</strong>这不是先写一大份架构文档，而是先消除最危险的模糊点：本阶段做什么、不做什么；谁有权限；什么证据才算完成。</div>
+    </section>
+
+    <section id="delivery">
+      <div class="section-head"><div class="section-no">02 / DELIVERY</div><div><h2>One independently testable slice at a time</h2><p class="summary">Keep each change small enough to understand, verify and reverse without mixing unrelated risk.</p></div></div>
+      <div class="flow grid grid-2">
+        <article class="card step"><h3>Write the current state</h3><p>Record the current slice, branch or PR, next step, decisions, blockers and environment facts. The next human or AI session should not reconstruct intent from chat history.</p></article>
+        <article class="card step"><h3>Implement one concern</h3><p>Use one focused branch and one independently reviewable commit. Reuse the existing architecture and avoid speculative abstraction.</p></article>
+        <article class="card step"><h3>Prove both sides</h3><p>Test the intended path and the forbidden or failure path. Never weaken a test merely to obtain a green build; classify the failure first.</p></article>
+        <article class="card step"><h3>Leave a truthful hand-off</h3><p>Report exactly what changed, what passed, what failed, what was not run and whether anything was pushed, deployed or changed in production.</p></article>
+      </div>
+      <div class="truth" style="margin-top:1rem"><strong>Recent EvidMatch example:</strong> retrieval evaluation, answer-layer evaluation and recovery work were kept in separate focused changes. Production <code>RAG_CONFIG</code> was not changed; unrelated matching-eval failures were reproduced with the recovery change staged out rather than hidden or “fixed” opportunistically.</div>
+    </section>
+
+    <section id="boundaries">
+      <div class="section-head"><div class="section-no">03 / TRUST</div><div><h2>Enforce trust below the browser</h2><p class="summary">UI filtering improves experience; it is not an authorisation boundary. Sensitive access belongs in database policies and controlled server operations.</p></div></div>
+      <div class="grid grid-3">
+        <article class="card"><span class="tag">Least privilege</span><h3>Deny until the relationship is explicit</h3><p>RLS needs an ownership or relationship condition, not simply “authenticated”. Do not create write policies until the permissions matrix requires them.</p></article>
+        <article class="card"><span class="tag">Controlled transitions</span><h3>Protect sensitive state changes</h3><p>Marks, roles, consent, publication and other sensitive fields change through validated functions or restricted APIs. Multi-record actions remain one transaction.</p></article>
+        <article class="card"><span class="tag">Data minimisation</span><h3>Collect with a purpose and deletion path</h3><p>For every personal field, record why it exists, where it lives, who can access it, retention and deletion triggers. Secrets and service credentials stay server-side.</p></article>
+      </div>
+      <div class="script" style="margin-top:1rem"><button class="copy" type="button">Copy</button><div class="label">Interview answer · secure AI delivery</div><blockquote>“I do not rely on the browser to hide sensitive data. I start with a permissions matrix, enforce the relationship in the database or server boundary, and add direct negative tests for another user, an unrelated role and an anonymous caller. Sensitive transitions go through a controlled operation that derives the actor from the authenticated session and validates the current state. That means a UI regression or a hand-crafted request cannot silently bypass the rule.”</blockquote></div>
+    </section>
+
+    <section id="automation">
+      <div class="section-head"><div class="section-no">04 / AI CONTROLS</div><div><h2>Turn guidance into enforcement</h2><p class="summary">Use the strongest mechanism that matches the risk. Add automation to prevent a real recurring failure, not because the tool exists.</p></div></div>
+      <div class="ladder">
+        <div class="rung"><strong>1 · Deny rule</strong><span>For commands that must never run automatically: production database pushes, production deploys, force pushes or secret-file reads.</span></div>
+        <div class="rung"><strong>2 · Blocking hook</strong><span>For a cheap, deterministic check that is easy to forget. Match narrowly, fail with a clear reason and keep it fast.</span></div>
+        <div class="rung"><strong>3 · Specialist reviewer</strong><span>For a heavy independent check. Give a security reviewer read-only tools, a fresh context and a ranked reporting format; keep the writer separate from the reviewer.</span></div>
+        <div class="rung"><strong>4 · Skill / runbook</strong><span>For a repeatable multi-step procedure with explicit approval gates, such as hand-off, migration deployment or smoke testing.</span></div>
+        <div class="rung"><strong>5 · Repository instruction</strong><span>For persistent context and rules: current scope, security patterns, commands, research gates and human-owned paths.</span></div>
+      </div>
+      <div class="coach"><strong>中文记忆法</strong>规则强度从“机器直接阻止”逐渐到“提醒 AI 遵守”。危险越高、判断越确定，越应靠 deny rule、hook、数据库约束或 CI，而不是只写一句提示词。</div>
+    </section>
+
+    <section id="proof">
+      <div class="section-head"><div class="section-no">05 / PROOF</div><div><h2>Different risks need different evidence</h2><p class="summary">A green unit test cannot prove RAG quality, cross-user isolation, recovery behaviour or production capacity.</p></div></div>
+      <div class="grid grid-2">
+        <article class="card"><h3>Software correctness</h3><ul><li>Unit tests for deterministic logic.</li><li>Integration tests for component and SDK boundaries.</li><li>Allowed and forbidden database tests for authorisation.</li><li>Build, type-check and focused regression tests.</li></ul></article>
+        <article class="card"><h3>AI quality</h3><ul><li>Versioned golden datasets, synthetic breadth and human-reviewed labels.</li><li>Retrieval and answer-layer metrics, plus inspected failure cases.</li><li>Independent judge models where practical.</li><li>No production claim from a small benchmark.</li></ul></article>
+        <article class="card"><h3>Reliability and cost</h3><ul><li>Bounded timeout and retry behaviour; test 429, 503, 400 and non-response.</li><li>Atomic output and resumable completed work.</li><li>Per-request token limits, concurrency controls and a daily kill switch.</li><li>Load-test staging at agreed peak multiples with p50/p95/p99 and error budgets.</li></ul></article>
+        <article class="card"><h3>Launch readiness</h3><ul><li>Evidence-linked checklist, not a verbal “looks ready”.</li><li>Backups plus a restore drill, monitoring and rollback.</li><li>Accessibility, privacy, security and operational ownership.</li><li>Human approval for production and high-risk paths.</li></ul></article>
+      </div>
+      <div class="script" style="margin-top:1rem"><button class="copy" type="button">Copy</button><div class="label">Interview answer · moving a POC towards production</div><blockquote>“I separate proof of usefulness from proof of operability. A POC first needs representative quality evidence and clear failure categories. Before production, I also need authorisation tests, bounded recovery, observability, cost controls, load and restore tests, a rollback plan and a named operational owner. I use a checklist with links to the evidence, and unticked high-risk items remain blockers unless an accountable owner explicitly accepts the risk.”</blockquote></div>
+    </section>
+
+    <section id="answers">
+      <div class="section-head"><div class="section-no">06 / FOLLOW-UPS</div><div><h2>Answers for deeper questioning</h2><p class="summary">Keep the principle short, then attach one concrete example.</p></div></div>
+      <details><summary>How do you stop AI-generated scope creep?</summary><div class="answer"><p class="say">“I write the current slice and its explicit exclusions into repository context, then keep one concern per branch and PR. If the implementation uncovers a later feature, I record it rather than quietly building it. That keeps review meaningful and makes it easy to distinguish necessary supporting work from product expansion.”</p></div></details>
+      <details><summary>When do you stop and research instead of coding?</summary><div class="answer"><p class="say">“I use a research gate when a decision affects authentication, security, an unfamiliar external contract or a broad architectural choice. I state what is known, what evidence is missing and what decision the research will unlock. That prevents confident implementation based on an assumption, while also stopping open-ended research from consuming the delivery window.”</p></div></details>
+      <details><summary>How do you review work produced with AI?</summary><div class="answer"><p class="say">“I review the trust boundaries and failure behaviour, not only the happy-path diff. I run the focused tests first, then use an independent reviewer for sensitive changes with read-only access and a required severity-based report. The author does not silently rewrite the reviewer’s findings, and the final hand-off names both the evidence and the gaps.”</p></div></details>
+      <details><summary>How do you make patterns reusable across rotations?</summary><div class="answer"><p class="say">“I separate durable patterns from project-specific state. Approved security recipes, test shapes and runbooks become reusable assets; current branches, blockers and next steps stay in the hand-off. I would share a pattern only after it solved a real problem and was reviewed, so the library compounds learning without turning one project’s assumptions into a universal rule.”</p></div></details>
+      <details><summary>What is the honest maturity boundary?</summary><div class="answer"><p class="say">“I have used these methods in focused product and RAG work: small changes, explicit production boundaries, direct negative tests, measured evaluation and truthful failure reporting. The full starter kit is a design and template set, not evidence that every guardrail has been deployed in every project. I would describe the implemented control, the proposed next control and the production state separately.”</p></div></details>
+    </section>
+  </main>
+
+  <footer><span>Nuix interview preparation · Engineering playbook</span><span><a href="index.html">Return to the main guide</a> · Local, self-contained HTML</span></footer>
+  <script>
+    document.querySelectorAll('.copy').forEach(button => button.addEventListener('click', async () => {
+      const text = button.parentElement.querySelector('blockquote').innerText;
+      try { await navigator.clipboard.writeText(text); button.textContent = 'Copied'; setTimeout(() => button.textContent = 'Copy', 1400); }
+      catch { button.textContent = 'Select text'; }
+    }));
+  </script>
+</body>
+</html>
