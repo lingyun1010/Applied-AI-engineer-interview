@@ -47,7 +47,7 @@
   <a class="skip" href="#approach">Skip to engineering playbook</a>
   <header class="topbar"><div class="topbar-inner">
     <a class="brand" href="index.html"><span class="brand-mark">N</span><span>Nuix interview prep</span></a>
-    <nav aria-label="Engineering playbook sections"><a href="#approach">Approach</a><a href="#delivery">Delivery</a><a href="#workflow">AI workflow</a><a href="#boundaries">Boundaries</a><a href="#automation">AI controls</a><a href="#proof">Proof</a><a href="#answers">Answers</a><a href="index.html">← Main guide</a></nav>
+    <nav aria-label="Engineering playbook sections"><a href="#approach">Approach</a><a href="#delivery">Delivery</a><a href="#workflow">AI workflow</a><a href="#boundaries">Boundaries</a><a href="#proof">Proof</a><a href="#answers">Answers</a><a href="index.html">← Main guide</a></nav>
     <button class="btn" type="button" onclick="window.print()">Print</button>
   </div></header>
 
@@ -69,16 +69,14 @@
     </section>
 
     <section id="delivery">
-      <div class="section-head"><div class="section-no">02 / DELIVERY</div><div><h2>One independently testable slice at a time</h2><p class="summary">Keep each change small enough to understand, verify and reverse without mixing unrelated risk.</p></div></div>
-      <div class="flow grid grid-2">
-        <article class="card step"><h3>Write the current state</h3><p>Record the current slice, branch or PR, next step, decisions, blockers and environment facts. The next human or AI session should not reconstruct intent from chat history.</p></article>
-        <article class="card step"><h3>Implement one concern</h3><p>Use one focused branch and one independently reviewable commit. Reuse the existing architecture and avoid speculative abstraction.</p></article>
-        <article class="card step"><h3>Prove both sides</h3><p>Test the intended path and the forbidden or failure path. Never weaken a test merely to obtain a green build; classify the failure first.</p></article>
-        <article class="card step"><h3>Leave a truthful hand-off</h3><p>Report exactly what changed, what passed, what failed, what was not run and whether anything was pushed, deployed or changed in production.</p></article>
+      <div class="section-head"><div class="section-no">02 / DELIVERY</div><div><h2>Small changes. Verifiable outcomes.</h2><p class="summary">The detailed ticket-to-merge sequence is covered in the AI workflow below. The enduring delivery rule is to keep changes reviewable and make the evidence and remaining risk explicit.</p></div></div>
+      <div class="grid grid-3">
+        <article class="card"><span class="tag">Focus</span><h3>One concern per change</h3><p>Keep the diff small, reuse the existing architecture and defer unrelated improvements instead of expanding the ticket.</p></article>
+        <article class="card"><span class="tag">Verification</span><h3>Test the failure path</h3><p>Check the intended behaviour and the relevant forbidden or failure case. Diagnose a failing test before changing code or expectations.</p></article>
+        <article class="card"><span class="tag">Handoff</span><h3>Report the actual state</h3><p>State what changed, which checks passed or failed, what was not run, and whether anything was pushed, merged or deployed.</p></article>
       </div>
-      <div class="truth" style="margin-top:1rem"><strong>Recent EvidMatch example:</strong> retrieval evaluation, answer-layer evaluation and recovery work were kept in separate focused changes. Production <code>RAG_CONFIG</code> was not changed; unrelated matching-eval failures were reproduced with the recovery change staged out rather than hidden or “fixed” opportunistically.</div>
+      <div class="truth" style="margin-top:1rem"><strong>EvidMatch example:</strong> retrieval evaluation, answer-layer evaluation and recovery work were handled as separate focused changes. Production <code>RAG_CONFIG</code> was left unchanged; unrelated matching-evaluation failures were reproduced with the recovery change staged out rather than hidden or fixed opportunistically.</div>
     </section>
-
 
     <section id="workflow">
       <div class="section-head"><div class="section-no">03 / AI WORKFLOW</div><div><h2>From AI-assisted coding to a controlled delivery system</h2><p class="summary">My current Claude Code workflow, developed through DrainWise, treats the model as an implementation partner inside an engineering system—not as an autonomous owner of the product or release.</p></div></div>
@@ -134,20 +132,8 @@
       <div class="script" style="margin-top:1rem"><button class="copy" type="button">Copy</button><div class="label">Interview answer · secure AI delivery</div><blockquote>“I do not rely on the browser to hide sensitive data. I start with a permissions matrix, enforce the relationship in the database or server boundary, and add direct negative tests for another user, an unrelated role and an anonymous caller. Sensitive transitions go through a controlled operation that derives the actor from the authenticated session and validates the current state. That means a UI regression or a hand-crafted request cannot silently bypass the rule.”</blockquote></div>
     </section>
 
-    <section id="automation">
-      <div class="section-head"><div class="section-no">05 / AI CONTROLS</div><div><h2>Turn guidance into enforcement</h2><p class="summary">Use the strongest mechanism that matches the risk. Add automation to prevent a real recurring failure, not because the tool exists.</p></div></div>
-      <div class="ladder">
-        <div class="rung"><strong>1 · Deny rule</strong><span>For commands that must never run automatically: production database pushes, production deploys, force pushes or secret-file reads.</span></div>
-        <div class="rung"><strong>2 · Blocking hook</strong><span>For a cheap, deterministic check that is easy to forget. Match narrowly, fail with a clear reason and keep it fast.</span></div>
-        <div class="rung"><strong>3 · Specialist reviewer</strong><span>For a heavy independent check. Give a security reviewer read-only tools, a fresh context and a ranked reporting format; keep the writer separate from the reviewer.</span></div>
-        <div class="rung"><strong>4 · Skill / runbook</strong><span>For a repeatable multi-step procedure with explicit approval gates, such as hand-off, migration deployment or smoke testing.</span></div>
-        <div class="rung"><strong>5 · Repository instruction</strong><span>For persistent context and rules: current scope, security patterns, commands, research gates and human-owned paths.</span></div>
-      </div>
-      <div class="coach"><strong>中文记忆法</strong>规则强度从“机器直接阻止”逐渐到“提醒 AI 遵守”。危险越高、判断越确定，越应靠 deny rule、hook、数据库约束或 CI，而不是只写一句提示词。</div>
-    </section>
-
     <section id="proof">
-      <div class="section-head"><div class="section-no">06 / PROOF</div><div><h2>Different risks need different evidence</h2><p class="summary">A green unit test cannot prove RAG quality, cross-user isolation, recovery behaviour or production capacity.</p></div></div>
+      <div class="section-head"><div class="section-no">05 / PROOF</div><div><h2>Different risks need different evidence</h2><p class="summary">A green unit test cannot prove RAG quality, cross-user isolation, recovery behaviour or production capacity.</p></div></div>
       <div class="grid grid-2">
         <article class="card"><h3>Software correctness</h3><ul><li>Unit tests for deterministic logic.</li><li>Integration tests for component and SDK boundaries.</li><li>Allowed and forbidden database tests for authorisation.</li><li>Build, type-check and focused regression tests.</li></ul></article>
         <article class="card"><h3>AI quality</h3><ul><li>Versioned golden datasets, synthetic breadth and human-reviewed labels.</li><li>Retrieval and answer-layer metrics, plus inspected failure cases.</li><li>Independent judge models where practical.</li><li>No production claim from a small benchmark.</li></ul></article>
@@ -158,7 +144,7 @@
     </section>
 
     <section id="answers">
-      <div class="section-head"><div class="section-no">07 / FOLLOW-UPS</div><div><h2>Answers for deeper questioning</h2><p class="summary">Keep the principle short, then attach one concrete example.</p></div></div>
+      <div class="section-head"><div class="section-no">06 / FOLLOW-UPS</div><div><h2>Answers for deeper questioning</h2><p class="summary">Keep the principle short, then attach one concrete example.</p></div></div>
       <details><summary>How do you stop AI-generated scope creep?</summary><div class="answer"><p class="say">“I write the current slice and its explicit exclusions into repository context, then keep one concern per branch and PR. If the implementation uncovers a later feature, I record it rather than quietly building it. That keeps review meaningful and makes it easy to distinguish necessary supporting work from product expansion.”</p></div></details>
       <details><summary>When do you stop and research instead of coding?</summary><div class="answer"><p class="say">“I use a research gate when a decision affects authentication, security, an unfamiliar external contract or a broad architectural choice. I state what is known, what evidence is missing and what decision the research will unlock. That prevents confident implementation based on an assumption, while also stopping open-ended research from consuming the delivery window.”</p></div></details>
       <details><summary>How do you review work produced with AI?</summary><div class="answer"><p class="say">“I review the trust boundaries and failure behaviour, not only the happy-path diff. I run the focused tests first, then use an independent reviewer for sensitive changes with read-only access and a required severity-based report. The author does not silently rewrite the reviewer’s findings, and the final hand-off names both the evidence and the gaps.”</p></div></details>
