@@ -47,7 +47,7 @@
   <a class="skip" href="#approach">Skip to engineering playbook</a>
   <header class="topbar"><div class="topbar-inner">
     <a class="brand" href="index.html"><span class="brand-mark">N</span><span>Nuix interview prep</span></a>
-    <nav aria-label="Engineering playbook sections"><a href="#approach">Approach</a><a href="#delivery">Delivery</a><a href="#workflow">AI workflow</a><a href="#boundaries">Boundaries</a><a href="#proof">Proof</a><a href="#answers">Answers</a><a href="index.html">← Main guide</a></nav>
+    <nav aria-label="Engineering playbook sections"><a href="#approach">Approach</a><a href="#delivery">Delivery</a><a href="#workflow">AI workflow</a><a href="#boundaries">Boundaries</a><a href="#integration-patterns">Integration patterns</a><a href="#proof">Proof</a><a href="#answers">Answers</a><a href="index.html">← Main guide</a></nav>
     <button class="btn" type="button" onclick="window.print()">Print</button>
   </div></header>
 
@@ -130,6 +130,37 @@
         <article class="card"><span class="tag">Data minimisation</span><h3>Collect with a purpose and deletion path</h3><p>For every personal field, record why it exists, where it lives, who can access it, retention and deletion triggers. Secrets and service credentials stay server-side.</p></article>
       </div>
       <div class="script" style="margin-top:1rem"><button class="copy" type="button">Copy</button><div class="label">Interview answer · secure AI delivery</div><blockquote>“I do not rely on the browser to hide sensitive data. I start with a permissions matrix, enforce the relationship in the database or server boundary, and add direct negative tests for another user, an unrelated role and an anonymous caller. Sensitive transitions go through a controlled operation that derives the actor from the authenticated session and validates the current state. That means a UI regression or a hand-crafted request cannot silently bypass the rule.”</blockquote></div>
+    </section>
+    <section id="integration-patterns">
+      <div class="section-head"><div class="section-no">05 / INTEGRATION PATTERNS</div><div><h2>OAuth, idempotency, RPC and source attribution</h2><p class="summary">Four practical engineering concerns from EvidMatch and the Love At Home integration. Explain the problem each mechanism solves, not just the acronym.</p></div></div>
+      <div class="grid grid-2" style="margin-top:1rem">
+        <article class="card"><span class="tag">OAuth 2.0 · delegated access</span><h3>Google sign-in and remote MCP are different OAuth use cases</h3>
+          <p><strong>Google sign-in:</strong> EvidMatch calls Supabase Auth's <code>signInWithOAuth</code> with Google as the provider. Google OAuth / OpenID Connect establishes the user's identity; Supabase then manages the application session. Strictly, OAuth 2.0 is the authorisation framework and OIDC is the identity layer.</p>
+          <p><strong>Remote MCP:</strong> the documented design uses Supabase's OAuth Server, Dynamic Client Registration and Authorization Code with PKCE. The user explicitly consents to a client before it can receive a delegated token. The MCP API validates the signed JWT, issuer, exact audience, expiry, subject/user identity, client ID and permission role.</p>
+          <p><strong>Least privilege:</strong> the reader role is separated from project-writing capability. The reader path is restricted to approved project-summary columns and provider-owned rows; it does not grant general private-table access or privileged writes.</p>
+        </article>
+        <article class="card"><span class="tag">Service identity · not user OAuth</span><h3>Google Sheets uses a service account</h3>
+          <p>The Love At Home Google Sheets integration uses a Google Cloud service account and IAM permissions. That is server-to-server service identity, not a user signing in through an OAuth consent screen. Keep the credentials server-side and grant only the spreadsheet access the workflow needs.</p>
+          <p>This distinction matters in an interview: identify who or what is being authenticated (a human user, an external client, or a backend service) before describing the flow.</p>
+        </article>
+        <article class="card"><span class="tag">Idempotency · safe retries</span><h3>Prevent duplicate side effects</h3>
+          <p>For retryable MCP write operations, the design tracks an operation/intent with an idempotency key and a status. A repeated request can return the recorded result when the operation has completed; an in-progress intent prevents the same logical action from being started again.</p>
+          <p>Do not describe this as exactly-once execution unless the full transaction and uniqueness guarantees have been verified. Idempotency reduces duplicate effects on retries; it does not by itself guarantee that a distributed operation can never run twice.</p>
+        </article>
+        <article class="card"><span class="tag">PostgreSQL RPC · atomic business operation</span><h3>Keep multi-step state changes together</h3>
+          <p>In EvidMatch, a PostgreSQL RPC is used where a business action needs several related database changes to succeed or fail as one transaction—for example, the milestone/project delivery workflow. The client invokes one defined database operation instead of issuing a sequence of independently committed writes.</p>
+          <p>RLS still governs which rows the caller may access; the RPC encapsulates the operation and its validation. An RPC is not automatically safe: review its execution context, grants, input validation and whether it derives the actor from trusted authentication context.</p>
+        </article>
+        <article class="card"><span class="tag">Source attribution · traceable AI output</span><h3>Show what supports the conclusion</h3>
+          <p>In EvidMatch, a match explanation should connect a job requirement to the profile evidence that supports it—for example, a React/TypeScript requirement linked to a specific project and its described work. The user can inspect the underlying evidence instead of receiving an unsupported match score or generated claim.</p>
+          <p>Retrieval finds relevant material; grounding means the answer is based on that material; source attribution identifies which source supports a particular statement. These are related but not interchangeable.</p>
+        </article>
+        <article class="card"><span class="tag">Architecture vocabulary</span><h3>Keep the concepts distinct</h3>
+          <ul><li><strong>Authentication:</strong> who is the user or service?</li><li><strong>Authorisation:</strong> what may that identity do?</li><li><strong>RLS:</strong> which rows may this database role access?</li><li><strong>RPC:</strong> which validated database operation is exposed?</li><li><strong>Idempotency:</strong> what happens if the same logical request is retried?</li><li><strong>Source attribution:</strong> which evidence supports the AI's statement?</li></ul>
+        </article>
+      </div>
+      <div class="script" style="margin-top:1rem"><button class="copy" type="button">Copy</button><div class="label">Interview answer · OAuth, retries, RPC and evidence · approximately 90 seconds</div><blockquote>“I've used OAuth in two different contexts in EvidMatch. For user sign-in, I integrated Google through Supabase Auth; Google OAuth with OpenID Connect establishes identity, and Supabase manages the application session. For remote MCP access, the architecture uses Supabase's OAuth server with dynamic client registration and the authorisation-code flow with PKCE. The important control is explicit user consent, followed by token validation for issuer, audience, expiry, user identity, client and role. We separate read access from write capability.<br><br>For reliable writes, I distinguish atomicity from idempotency. A PostgreSQL RPC can keep related database changes in one transaction, so they commit or roll back together. Idempotency addresses retries: the same logical operation should not create duplicate side effects, so the operation is tracked with an idempotency key and status. I would not call that exactly-once execution without verifying the underlying uniqueness and transaction guarantees.<br><br>For AI-generated matches, source attribution connects a conclusion to the profile evidence that supports it. That makes the output inspectable rather than asking the user to trust a score or a fluent explanation.”</blockquote></div>
+      <div class="coach"><strong>Accuracy boundary · what to say if challenged</strong><p>The MCP documentation describes the Stage 2C OAuth flow and controls, but explicitly says not to call it end-to-end verified until the deployed-preview checks have been completed. Describe the implementation and documented architecture accurately; do not claim a completed production rollout or verified end-to-end deployment unless you have since run those checks. Likewise, do not claim a database UNIQUE constraint, distributed lock or exactly-once guarantee for idempotency unless you can point to the implementation.</p></div>
     </section>
 
     <section id="proof">
