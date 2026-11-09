@@ -47,7 +47,7 @@
   <a class="skip" href="#approach">Skip to engineering playbook</a>
   <header class="topbar"><div class="topbar-inner">
     <a class="brand" href="index.html"><span class="brand-mark">N</span><span>Nuix interview prep</span></a>
-    <nav aria-label="Engineering playbook sections"><a href="#approach">Approach</a><a href="#delivery">Delivery</a><a href="#workflow">AI workflow</a><a href="#boundaries">Boundaries</a><a href="#integration-patterns">Integration patterns</a><a href="#proof">Proof</a><a href="#answers">Answers</a><a href="index.html">← Main guide</a></nav>
+    <nav aria-label="Engineering playbook sections"><a href="#approach">Approach</a><a href="#delivery">Delivery</a><a href="#workflow">AI workflow</a><a href="#boundaries">Boundaries</a><a href="#integration-patterns">Integration patterns</a><a href="#ai-recovery">AI recovery</a><a href="#proof">Proof</a><a href="#answers">Answers</a><a href="index.html">← Main guide</a></nav>
     <button class="btn" type="button" onclick="window.print()">Print</button>
   </div></header>
 
@@ -163,8 +163,38 @@
       <div class="coach"><strong>Accuracy boundary · what to say if challenged</strong><p>The MCP documentation describes the Stage 2C OAuth flow and controls, but explicitly says not to call it end-to-end verified until the deployed-preview checks have been completed. Describe the implementation and documented architecture accurately; do not claim a completed production rollout or verified end-to-end deployment unless you have since run those checks. Likewise, do not claim a database UNIQUE constraint, distributed lock or exactly-once guarantee for idempotency unless you can point to the implementation.</p></div>
     </section>
 
+    <section id="ai-recovery">
+      <div class="section-head"><div class="section-no">06 / AI RECOVERY</div><div><h2>AI provider failures and recovery policy</h2><p class="summary">Matching analysis and avatar generation have different execution models, so they use different recovery strategies. The key is to retry only when it is safe and useful—not to treat every error as transient.</p></div></div>
+      <div class="grid grid-2">
+        <article class="card"><span class="tag">Shared OpenAI client</span><h3>Bounded SDK retries by default</h3>
+          <p>The shared client in <code>src/openai/client.ts</code> sets a 60-second timeout and <code>maxRetries: 2</code>. The OpenAI SDK retries transient rate-limit (429) and server-side (5xx) failures with backoff. That means up to three attempts in total for operations using the shared defaults.</p>
+          <p>Recovery tests cover a 429 that later succeeds, a persistent 429 that stops after the retry limit, a 503 retry, a 400 that is not retried, and a provider that never responds and times out.</p>
+        </article>
+        <article class="card"><span class="tag">Job matching · deliberate override</span><h3>No automatic provider retry for the expensive analysis</h3>
+          <p><code>src/opportunities/matchingRequest.ts</code> creates the tailoring analysis provider with a 240-second timeout and <code>maxRetries: 0</code>. This deliberately overrides the shared client's retry default: a long, potentially costly analysis is not silently repeated by the SDK.</p>
+          <p>Instead, the request path uses a cache key, quota reservation and a single-flight lease. A concurrent request receives a 409 response; a cached result is reused; quota exhaustion returns 429. A successful result is cached, while a failed run is recorded and the failure path finalises the quota reservation according to the recovery policy.</p>
+        </article>
+        <article class="card"><span class="tag">Avatar generation · durable job</span><h3>Queue, reclaim and user retry</h3>
+          <p>Avatar generation runs as a background job with explicit <code>queued</code>, <code>generating</code>, <code>ready</code> and <code>failed</code> states. The claim RPC can reclaim a job left in <code>generating</code> for more than 15 minutes, and increments its attempt count.</p>
+          <p>If processing throws, the worker records a safe failure message and marks the job failed. The owner can explicitly retry a failed job through <code>retry_avatar_generation_job</code>, which returns it to the queue. This is job-level recovery; the inspected worker does not show a general HTTP-status-specific retry matrix for the image provider.</p>
+        </article>
+        <article class="card"><span class="tag">HTTP status · classify before retry</span><h3>Not every 4xx or 5xx means “try again”</h3>
+          <ul>
+            <li><strong>400:</strong> invalid input/request; fix the request rather than retrying unchanged.</li>
+            <li><strong>404:</strong> missing resource, such as unavailable job details; not a transient retry signal.</li>
+            <li><strong>409:</strong> matching is already in progress or its saved result is being finalised; the client may retry shortly, but this is not an automatic provider retry.</li>
+            <li><strong>429:</strong> distinguish OpenAI provider rate limiting (shared SDK retries with backoff) from EvidMatch quota exhaustion (application response; wait for quota/reset or plan allowance).</li>
+            <li><strong>5xx / timeout:</strong> potentially transient. The shared client retries eligible provider failures; the long-running matching path instead times out and follows its explicit failure/quota policy.</li>
+          </ul>
+        </article>
+      </div>
+      <div class="truth" style="margin-top:1rem"><strong>What the current implementation does—and does not—claim:</strong> matching uses a 240-second provider timeout, disables SDK retries for that call, and has cache/single-flight/quota recovery. The general shared client has bounded retries and tests for 429, 503, 400 and timeout. Avatar jobs have stale-worker reclamation after 15 minutes and an owner-triggered retry. Do not claim that avatar generation currently classifies 404/429/500 into separate retry policies, has exponential backoff, or has a maximum-attempt/dead-letter policy: those controls were not present in the inspected worker and migration. Also distinguish a retryable provider 429 from the app's own quota 429.</div>
+      <div class="script" style="margin-top:1rem"><button class="copy" type="button">Copy</button><div class="label">Interview answer · AI failure and recovery · approximately 90 seconds</div><blockquote>“We use different recovery strategies depending on the AI workload. Our shared OpenAI client has a 60-second timeout and two retries, so the SDK can recover from transient rate limits and server errors with backoff. We test that behaviour, including persistent 429s, 503s, non-retryable 400s and timeouts.<br><br>For job matching, we deliberately override that default. The analysis can take several minutes and has a real cost, so we set a 240-second timeout and disable automatic provider retries. Instead, we use a cache key, a quota reservation and a single-flight lease to prevent duplicate work. If it fails or times out, the request follows the quota recovery policy rather than silently launching another expensive call. We also distinguish an OpenAI rate-limit response from our own application quota limit.<br><br>Avatar generation is asynchronous. It uses a durable job queue with explicit states. A worker can reclaim a job that has been stuck in the generating state for more than 15 minutes, and a user can manually retry a failed job. I would not claim we already have a complete status-specific retry matrix for avatar generation. The principle is bounded recovery, no uncontrolled duplicate work, and clear visibility when a job needs intervention.”</blockquote></div>
+      <div class="coach"><strong>Potential next engineering improvements</strong><p>For avatar generation, consider a bounded automatic retry policy for explicitly transient provider failures (for example, selected 429/5xx/network errors), honouring <code>Retry-After</code> where available, with exponential backoff and jitter. Add a maximum attempt count and a terminal/dead-letter state, plus metrics for attempts, age, failure class and recovery rate. Keep invalid input and missing-resource errors non-retryable. These are recommendations, not claims about the current implementation.</p></div>
+    </section>
+
     <section id="proof">
-      <div class="section-head"><div class="section-no">05 / PROOF</div><div><h2>Different risks need different evidence</h2><p class="summary">A green unit test cannot prove RAG quality, cross-user isolation, recovery behaviour or production capacity.</p></div></div>
+      <div class="section-head"><div class="section-no">07 / PROOF</div><div><h2>Different risks need different evidence</h2><p class="summary">A green unit test cannot prove RAG quality, cross-user isolation, recovery behaviour or production capacity.</p></div></div>
       <div class="grid grid-2">
         <article class="card"><h3>Software correctness</h3><ul><li>Unit tests for deterministic logic.</li><li>Integration tests for component and SDK boundaries.</li><li>Allowed and forbidden database tests for authorisation.</li><li>Build, type-check and focused regression tests.</li></ul></article>
         <article class="card"><h3>AI quality</h3><ul><li>Versioned golden datasets, synthetic breadth and human-reviewed labels.</li><li>Retrieval and answer-layer metrics, plus inspected failure cases.</li><li>Independent judge models where practical.</li><li>No production claim from a small benchmark.</li></ul></article>
@@ -175,7 +205,7 @@
     </section>
 
     <section id="answers">
-      <div class="section-head"><div class="section-no">06 / FOLLOW-UPS</div><div><h2>Answers for deeper questioning</h2><p class="summary">Keep the principle short, then attach one concrete example.</p></div></div>
+      <div class="section-head"><div class="section-no">08 / FOLLOW-UPS</div><div><h2>Answers for deeper questioning</h2><p class="summary">Keep the principle short, then attach one concrete example.</p></div></div>
       <details><summary>How do you stop AI-generated scope creep?</summary><div class="answer"><p class="say">“I write the current slice and its explicit exclusions into repository context, then keep one concern per branch and PR. If the implementation uncovers a later feature, I record it rather than quietly building it. That keeps review meaningful and makes it easy to distinguish necessary supporting work from product expansion.”</p></div></details>
       <details><summary>When do you stop and research instead of coding?</summary><div class="answer"><p class="say">“I use a research gate when a decision affects authentication, security, an unfamiliar external contract or a broad architectural choice. I state what is known, what evidence is missing and what decision the research will unlock. That prevents confident implementation based on an assumption, while also stopping open-ended research from consuming the delivery window.”</p></div></details>
       <details><summary>How do you review work produced with AI?</summary><div class="answer"><p class="say">“I review the trust boundaries and failure behaviour, not only the happy-path diff. I run the focused tests first, then use an independent reviewer for sensitive changes with read-only access and a required severity-based report. The author does not silently rewrite the reviewer’s findings, and the final hand-off names both the evidence and the gaps.”</p></div></details>
