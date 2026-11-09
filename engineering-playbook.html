@@ -47,7 +47,7 @@
   <a class="skip" href="#approach">Skip to engineering playbook</a>
   <header class="topbar"><div class="topbar-inner">
     <a class="brand" href="index.html"><span class="brand-mark">N</span><span>Nuix interview prep</span></a>
-    <nav aria-label="Engineering playbook sections"><a href="#approach">Approach</a><a href="#delivery">Delivery</a><a href="#boundaries">Boundaries</a><a href="#automation">AI controls</a><a href="#proof">Proof</a><a href="#answers">Answers</a><a href="index.html">← Main guide</a></nav>
+    <nav aria-label="Engineering playbook sections"><a href="#approach">Approach</a><a href="#delivery">Delivery</a><a href="#workflow">AI workflow</a><a href="#boundaries">Boundaries</a><a href="#automation">AI controls</a><a href="#proof">Proof</a><a href="#answers">Answers</a><a href="index.html">← Main guide</a></nav>
     <button class="btn" type="button" onclick="window.print()">Print</button>
   </div></header>
 
@@ -79,8 +79,53 @@
       <div class="truth" style="margin-top:1rem"><strong>Recent EvidMatch example:</strong> retrieval evaluation, answer-layer evaluation and recovery work were kept in separate focused changes. Production <code>RAG_CONFIG</code> was not changed; unrelated matching-eval failures were reproduced with the recovery change staged out rather than hidden or “fixed” opportunistically.</div>
     </section>
 
+
+    <section id="workflow">
+      <div class="section-head"><div class="section-no">03 / AI WORKFLOW</div><div><h2>From AI-assisted coding to a controlled delivery system</h2><p class="summary">My current Claude Code workflow, developed through DrainWise, treats the model as an implementation partner inside an engineering system—not as an autonomous owner of the product or release.</p></div></div>
+
+      <div class="grid grid-2">
+        <article class="card"><span class="tag">Memory</span><h3>Persistent project context</h3><p><strong>CLAUDE.md</strong> holds the project brief, glossary, UI conventions and durable rules. A separate hand-off file records the current goal, decisions, state, blockers and gotchas so a fresh session can resume without relying on chat history.</p></article>
+        <article class="card"><span class="tag">Workflow</span><h3>Methods loaded when needed</h3><p>Skills provide repeatable procedures and expected outputs. They are not another always-on instruction dump: use research, planning, TDD, debugging, security review or hand-off when the current stage calls for it.</p></article>
+        <article class="card"><span class="tag">Enforcement</span><h3>Hooks and CI create hard gates</h3><p>Hooks can block dangerous Git actions, PR creation before required checks, and merges without green CI. GitHub Actions and branch protection provide an independent backstop that a coding agent cannot talk its way past.</p></article>
+        <article class="card"><span class="tag">Division of labour</span><h3>Fresh-context, read-only reviewers</h3><p>Separate reviewers inspect behaviour, accessibility/UI, UX flow and visual design. They report findings rather than editing the implementation. UI/UX/design reviews run only after I explicitly approve them.</p></article>
+      </div>
+
+      <h3 style="margin:2rem 0 1rem">Nine stages, with a gate before moving on</h3>
+      <div class="grid grid-3">
+        <article class="card"><span class="tag">01 · Init</span><h3>Prepare the project</h3><p>Check repository instructions, hooks, CI and the issue/ticket tracker. Confirm the working tree and current state.</p></article>
+        <article class="card"><span class="tag">02 · Think</span><h3>Research and decide</h3><p>Use primary sources for unknown facts. Make product and technical decisions explicitly; capture terms and constraints in the glossary.</p></article>
+        <article class="card"><span class="tag">03 · Map</span><h3>Record the plan</h3><p>Maintain a decision map and create tickets for unresolved choices. Turn agreed decisions into a spec and thin, independently deliverable tickets.</p></article>
+        <article class="card"><span class="tag">04 · Slice</span><h3>One ticket, one branch</h3><p>Define scope, affected files and acceptance criteria. Keep each slice small enough for one focused PR and a meaningful review.</p></article>
+        <article class="card"><span class="tag">05 · Build</span><h3>Test first, then implement</h3><p>Write or confirm the failing test, identify module seams and implement the smallest change. Diagnose causes rather than patching symptoms.</p></article>
+        <article class="card"><span class="tag">06 · Pre-PR</span><h3>Simplify and inspect</h3><p>Remove needless complexity, run security checks where relevant, and use independent reviewers. UI critique and browser review are explicit approval gates.</p></article>
+        <article class="card"><span class="tag">07 · Review</span><h3>Resolve findings</h3><p>Review standards and specification compliance. Do not proceed with open findings above the agreed low-severity threshold.</p></article>
+        <article class="card"><span class="tag">08 · Merge</span><h3>Require objective evidence</h3><p>CI must be green and the PR must record smoke-test evidence. A hook blocks the merge when either condition is missing.</p></article>
+        <article class="card"><span class="tag">09 · Post-merge</span><h3>Verify and update memory</h3><p>Re-run relevant tests on the main branch, update the decision map and hand-off, and record any new operational gotcha. Stages 5–9 repeat for each ticket.</p></article>
+      </div>
+
+      <h3 style="margin:2rem 0 1rem">Choose the right lever for the job</h3>
+      <div class="ladder">
+        <div class="rung"><strong>CLAUDE.md</strong><span>Facts and rules that should be available in every session: project context, conventions, constraints and commands.</span></div>
+        <div class="rung"><strong>Skills</strong><span>On-demand playbooks: research, decision discovery, architecture mapping, ticket slicing, TDD, debugging, simplification, security review and hand-off.</span></div>
+        <div class="rung"><strong>Hooks</strong><span>Deterministic reminders or blockers at the point of action—for example, dangerous Git commands, PR creation and merge checks.</span></div>
+        <div class="rung"><strong>Subagents</strong><span>Fresh-context workers with limited tools. Review agents are read-only so they cannot quietly change the code they are meant to assess.</span></div>
+        <div class="rung"><strong>MCP / integrations</strong><span>Live access to tools such as the browser, database and deployment platform. Tool access is scoped; it does not replace authorisation or human approval.</span></div>
+      </div>
+
+      <div class="grid grid-2" style="margin-top:1rem">
+        <article class="card"><h3>CI and release controls in DrainWise</h3><ul><li>Every PR runs three parallel jobs: web lint/typecheck, planner Vitest and Python pytest for the model/API.</li><li>Main branch protection requires a PR and the checks; force-push and branch deletion are disabled.</li><li>A pre-merge hook checks GitHub CI status and requires smoke-test evidence in the PR description.</li><li>Vercel deploys from GitHub after merge; I do not run an ad-hoc deploy script.</li></ul></article>
+        <article class="card"><h3>Parallel work without parallel authority</h3><ul><li>Independent tickets can run in separate Git worktrees, each with its own brief, branch and PR.</li><li>Each session runs its own review and records findings on its PR.</li><li>I retain ticket prioritisation, merge decisions and real-device acceptance testing.</li><li>Parallel agents increase throughput; they do not receive authority to approve or release their own work.</li></ul></article>
+      </div>
+
+      <div class="truth" style="margin-top:1rem"><strong>DrainWise is the running case study, not a claim of enterprise production maturity.</strong> It is a City of Parramatta hackathon entry using sample data and a risk model trained on simulated history. Its stack has a Next.js frontend, FastAPI risk API and TypeScript planner; a parity test checks that Python and TypeScript risk scores stay within 1e-6. Authentication was deliberately left out of the MVP: a short team code shares a session, with known limits such as last-write-wins. Supabase RLS is enabled with no client policies; the server route uses the server key. The workflow makes these decisions and limitations visible rather than describing the demo as production-ready.</div>
+
+      <div class="script" style="margin-top:1rem"><button class="copy" type="button">Copy</button><div class="label">Interview answer · how I use AI coding agents now · 90 seconds</div><blockquote>“My approach has evolved from asking an AI tool to implement a feature to giving it a controlled delivery process. I keep durable project context and conventions in a repository instruction file, while repeatable methods—such as research, planning, test-driven development, debugging and hand-off—are loaded as skills when needed. For a larger change, I first research the unknowns, record decisions, map the work into small tickets and then implement one ticket per branch and PR. I use hooks for deterministic gates, such as blocking a merge unless CI is green and smoke-test evidence is recorded. I also use fresh-context, read-only reviewers so the agent that wrote the code is not the only one assessing it. CI runs the relevant frontend, planner and Python tests, and I still own the product decisions, review findings, merge decision and real-device checks. DrainWise is where I have put this workflow into practice. It is a hackathon project with sample data, so I am careful to distinguish the engineering controls I have implemented from production capabilities I have not built, such as full authentication and concurrent-write handling.”</blockquote></div>
+
+      <div class="coach"><strong>中文提示</strong><p>核心不是“我会用 Claude Code / MCP / agents”，而是“我把 AI 放进一个有记忆、有阶段、有自动化门禁、有独立审查的交付系统”。讲清楚四层：Memory、Workflow、Enforcement、Division of labour。被追问时再展开九个阶段、hook 如何 block、CI 如何兜底，以及哪些决策仍由你负责。</p><p><strong>准确性边界：</strong>DrainWise 的样例数据、模拟训练数据、无完整登录、RLS 无客户端策略和未覆盖的并发写入都要如实说明；不要把 hackathon demo 描述成真实市政生产系统。</p><p><strong>Reusable kit:</strong> <a href="https://github.com/lingyun1010/builder-project" target="_blank" rel="noreferrer">lingyun1010/builder-project</a> packages the project skill, hooks, read-only reviewer templates, CLAUDE.md, review gates and hand-off scaffolding. Read the hooks before installing them into another repository.</p></div>
+    </section>
+
     <section id="boundaries">
-      <div class="section-head"><div class="section-no">03 / TRUST</div><div><h2>Enforce trust below the browser</h2><p class="summary">UI filtering improves experience; it is not an authorisation boundary. Sensitive access belongs in database policies and controlled server operations.</p></div></div>
+      <div class="section-head"><div class="section-no">04 / TRUST</div><div><h2>Enforce trust below the browser</h2><p class="summary">UI filtering improves experience; it is not an authorisation boundary. Sensitive access belongs in database policies and controlled server operations.</p></div></div>
       <div class="grid grid-3">
         <article class="card"><span class="tag">Least privilege</span><h3>Deny until the relationship is explicit</h3><p>RLS needs an ownership or relationship condition, not simply “authenticated”. Do not create write policies until the permissions matrix requires them.</p></article>
         <article class="card"><span class="tag">Controlled transitions</span><h3>Protect sensitive state changes</h3><p>Marks, roles, consent, publication and other sensitive fields change through validated functions or restricted APIs. Multi-record actions remain one transaction.</p></article>
@@ -90,7 +135,7 @@
     </section>
 
     <section id="automation">
-      <div class="section-head"><div class="section-no">04 / AI CONTROLS</div><div><h2>Turn guidance into enforcement</h2><p class="summary">Use the strongest mechanism that matches the risk. Add automation to prevent a real recurring failure, not because the tool exists.</p></div></div>
+      <div class="section-head"><div class="section-no">05 / AI CONTROLS</div><div><h2>Turn guidance into enforcement</h2><p class="summary">Use the strongest mechanism that matches the risk. Add automation to prevent a real recurring failure, not because the tool exists.</p></div></div>
       <div class="ladder">
         <div class="rung"><strong>1 · Deny rule</strong><span>For commands that must never run automatically: production database pushes, production deploys, force pushes or secret-file reads.</span></div>
         <div class="rung"><strong>2 · Blocking hook</strong><span>For a cheap, deterministic check that is easy to forget. Match narrowly, fail with a clear reason and keep it fast.</span></div>
@@ -102,7 +147,7 @@
     </section>
 
     <section id="proof">
-      <div class="section-head"><div class="section-no">05 / PROOF</div><div><h2>Different risks need different evidence</h2><p class="summary">A green unit test cannot prove RAG quality, cross-user isolation, recovery behaviour or production capacity.</p></div></div>
+      <div class="section-head"><div class="section-no">06 / PROOF</div><div><h2>Different risks need different evidence</h2><p class="summary">A green unit test cannot prove RAG quality, cross-user isolation, recovery behaviour or production capacity.</p></div></div>
       <div class="grid grid-2">
         <article class="card"><h3>Software correctness</h3><ul><li>Unit tests for deterministic logic.</li><li>Integration tests for component and SDK boundaries.</li><li>Allowed and forbidden database tests for authorisation.</li><li>Build, type-check and focused regression tests.</li></ul></article>
         <article class="card"><h3>AI quality</h3><ul><li>Versioned golden datasets, synthetic breadth and human-reviewed labels.</li><li>Retrieval and answer-layer metrics, plus inspected failure cases.</li><li>Independent judge models where practical.</li><li>No production claim from a small benchmark.</li></ul></article>
@@ -113,7 +158,7 @@
     </section>
 
     <section id="answers">
-      <div class="section-head"><div class="section-no">06 / FOLLOW-UPS</div><div><h2>Answers for deeper questioning</h2><p class="summary">Keep the principle short, then attach one concrete example.</p></div></div>
+      <div class="section-head"><div class="section-no">07 / FOLLOW-UPS</div><div><h2>Answers for deeper questioning</h2><p class="summary">Keep the principle short, then attach one concrete example.</p></div></div>
       <details><summary>How do you stop AI-generated scope creep?</summary><div class="answer"><p class="say">“I write the current slice and its explicit exclusions into repository context, then keep one concern per branch and PR. If the implementation uncovers a later feature, I record it rather than quietly building it. That keeps review meaningful and makes it easy to distinguish necessary supporting work from product expansion.”</p></div></details>
       <details><summary>When do you stop and research instead of coding?</summary><div class="answer"><p class="say">“I use a research gate when a decision affects authentication, security, an unfamiliar external contract or a broad architectural choice. I state what is known, what evidence is missing and what decision the research will unlock. That prevents confident implementation based on an assumption, while also stopping open-ended research from consuming the delivery window.”</p></div></details>
       <details><summary>How do you review work produced with AI?</summary><div class="answer"><p class="say">“I review the trust boundaries and failure behaviour, not only the happy-path diff. I run the focused tests first, then use an independent reviewer for sensitive changes with read-only access and a required severity-based report. The author does not silently rewrite the reviewer’s findings, and the final hand-off names both the evidence and the gaps.”</p></div></details>
